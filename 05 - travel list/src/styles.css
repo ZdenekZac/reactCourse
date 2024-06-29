@@ -16,13 +16,13 @@ body {
 .flashcards div {
   border: 1px solid #e7e7e7;
   background-color: #f7f7f7;
-  border-radius: 7px;
+  border-radius: 2px;
   aspect-ratio: 2 / 1;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 20px;
+  padding: 2px;
   cursor: pointer;
 }
 
@@ -31,4 +31,10 @@ div.selected {
   background-color: #e03131;
   color: #fff;
   font-weight: bold;
+}
+
+.reset {
+  position: absolute;
+  left: 0;
+  top: 0;
 }

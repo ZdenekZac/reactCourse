@@ -16,6 +16,7 @@ body {
   color: #5a3e2b;
   font-family: "Quicksand";
   font-weight: 500;
+  display: flex;
 }
 
 .app {
@@ -38,7 +39,7 @@ h1 {
 }
 
 .add-form {
-  background-color: #e5771f;
+  background-color: #39e51f;
   padding: 2.8rem 0;
   display: flex;
   align-items: center;
@@ -54,7 +55,6 @@ h3 {
 button,
 select,
 input {
-  background-color: #ffebb3;
   color: #5a3e2b;
   font-family: inherit;
   border: none;
@@ -63,6 +63,7 @@ input {
   font-weight: 700;
   font-size: 1.8rem;
   cursor: pointer;
+  align-items: center;
 }
 
 .add-form button {
@@ -112,7 +113,7 @@ input {
 input[type="checkbox"] {
   height: 2rem;
   width: 2rem;
-  accent-color: #e5771f;
+  accent-color: #22e51f;
 }
 
 .list li button {
@@ -134,4 +135,13 @@ input[type="checkbox"] {
 .counter {
   display: flex;
   flex-direction: column;
+}
+
+/* DIVIDER */
+
+.divider {
+  width: 100%;
+  height: 4px;
+  background-color: #f20b0b;
+  margin: 5rem auto;
 }
