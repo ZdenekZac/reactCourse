@@ -37,4 +37,11 @@ div.selected {
   position: absolute;
   left: 0;
   top: 0;
+  color: red;
+}
+
+.counter {
+  display: flex;
+  flex-direction: column;
+  position: relative;
 }
