@@ -97,21 +97,3 @@ h3 {
 .close:hover {
   color: #7950f2;
 }
-
-/* // coding challenge */
-.count-div {
-  display: flex;
-  margin: 0 auto;
-  align-items: center;
-  justify-content: center;
-}
-
-.btnStep {
-  margin: 4px;
-}
-
-.appDiv {
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-}
