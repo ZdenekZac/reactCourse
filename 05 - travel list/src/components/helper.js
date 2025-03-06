@@ -1,4 +1,4 @@
-import "./styles.css";
+import "../styles.css";
 import { useState } from "react";
 
 // --------------------- 04 - STEPS, COUNTER, CARDS, ETC ------------
