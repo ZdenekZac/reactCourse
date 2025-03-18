@@ -33,11 +33,24 @@ function App() {
     setShowAddFriend(false);
   }
 
+  function handleShowAddFriend() {
+    setShowAddFriend((show) => !show);
+  }
+
+  function handleAddFriend(friend) {
+    setFriends((friends) => [...friends, friend]);
+    setShowAddFriend(false);
+  }
+
   return (
     <div className="App">
       <div className="sidebar">
         <Container friends={friends} selectedFriend={selectedFriend} onSelection={handleSelection} />
-        <Button className="button">Add friend</Button>
+
+        {showAddFriend && <FormAddFriend onAddFriend={handleAddFriend} />}
+        <Button className="button" onClick={handleShowAddFriend}>
+          {showAddFriend ? "close" : "Add friend"}
+        </Button>
       </div>
     </div>
   );
@@ -67,7 +80,7 @@ function FormAddFriend({ onAddFriend }) {
       id,
       name,
       image: `${image}?=${id}`,
-      balace: 0,
+      balace: 2,
     };
 
     onAddFriend(newFriend);

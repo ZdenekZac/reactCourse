@@ -17,15 +17,15 @@ body {
 
 .App {
   text-align: center;
-  height: 80vh;
-  width: 65%;
+  height: 100vh;
+  width: 100%;
   padding-top: 3rem;
   border: 1px solid rgb(200, 199, 199);
   margin: 10rem auto;
   background-color: #535965;
   border-radius: 1rem;
   display: grid;
-  grid-template-columns: 40% 40%;
+  grid-template-columns: 1fr 1fr;
   column-gap: 5rem;
   justify-content: center;
 }
@@ -83,8 +83,17 @@ body {
   color: red;
 }
 
+.sidebar {
+  display: grid;
+}
+
 .sidebar > .button {
   float: right;
   margin-right: 1.2rem;
   padding: 0.6rem;
+}
+
+form {
+  display: grid;
+  grid-column: 2;
 }
