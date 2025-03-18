@@ -83,8 +83,9 @@ body {
   color: red;
 }
 
-.sidebar {
-  display: grid;
+.sidebar li .button {
+  grid-row: span 2;
+  grid-column: 3;
 }
 
 .sidebar > .button {
@@ -94,6 +95,5 @@ body {
 }
 
 form {
-  display: grid;
-  grid-column: 2;
+  grid-column: 1;
 }
