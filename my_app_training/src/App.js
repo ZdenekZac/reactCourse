@@ -37,10 +37,6 @@ function App() {
     setShowAddFriend((show) => !show);
   }
 
-  function handleShowSplitBill() {
-    setSelectedFriend((show) => !show);
-  }
-
   function handleAddFriend(friend) {
     setFriends((friends) => [...friends, friend]);
     setShowAddFriend(false);
@@ -65,7 +61,7 @@ function App() {
           {showAddFriend ? "close" : "Add friend"}
         </Button>
       </div>
-      {selectedFriend && <FormSplitBill selectedFriend={selectedFriend} onShowSplitBill={handleShowSplitBill} />}
+      {selectedFriend && <FormSplitBill selectedFriend={selectedFriend} onSplitBill={handleSplitBill} />}
     </div>
   );
 }
@@ -116,16 +112,43 @@ function FormAddFriend({ onAddFriend }) {
   );
 }
 
-function FormSplitBill({ onShowSplitBill, selectedFriend }) {
+function FormSplitBill({ onSplitBill, selectedFriend }) {
   const [bill, setBill] = useState("");
   const [paidByUser, setPaidByUser] = useState("");
+  const paidByFriend = bill ? bill - paidByUser : "";
+  const [whoIsPaying, setWhoIsPaying] = useState("user");
+
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    if (!bill || !paidByUser) return;
+    onSplitBill(whoIsPaying === "user" ? paidByFriend : -paidByUser);
+  }
 
   return (
-    <form className="formSplitBill">
+    <form className="formSplitBill" onSubmit={handleSubmit}>
       <h2>Split a bill with {selectedFriend.name}</h2>
+
       <label>💵 Bill Value</label>
       <input type="text" value={bill} onChange={(e) => setBill(e.target.value)} />
-      <Button>Test</Button>
+
+      <label>👤 Your expense</label>
+      <input
+        type="text"
+        value={paidByUser}
+        onChange={(e) => setPaidByUser(Number(e.target.value) > bill ? paidByUser : Number(e.target.value))}
+      />
+
+      <label>🫂 {selectedFriend.name}'s expense</label>
+      <input type="text" disabled value={paidByFriend} onChange={(e) => setPaidByUser(e.target.value)} />
+
+      <label>❓ Who's paying the Bill?</label>
+      <select value={whoIsPaying} onChange={(e) => setWhoIsPaying(e.target.value)}>
+        <option value="user">You</option>
+        <option value="friend">{selectedFriend.name}</option>
+      </select>
+      <Button>Delete friend</Button>
+      <Button>Split Bill</Button>
     </form>
   );
 }
