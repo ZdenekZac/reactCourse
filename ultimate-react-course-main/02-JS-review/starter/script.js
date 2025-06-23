@@ -30,7 +30,17 @@ const data = [
     title: "The Cyberiad",
     publicationDate: "1965-01-01",
     author: "Stanislaw Lem",
+<<<<<<< HEAD
     genres: ["science fiction", "humor", "speculative fiction", "short stories", "fantasy"],
+=======
+    genres: [
+      "science fiction",
+      "humor",
+      "speculative fiction",
+      "short stories",
+      "fantasy"
+    ],
+>>>>>>> da4a21dcf42c4c25d7e98546ef0694bd9e8bd81f
     hasMovieAdaptation: false,
     pages: 295,
     translations: {},
@@ -53,7 +63,7 @@ const data = [
     publicationDate: "1965-01-01",
     author: "Frank Herbert",
     genres: ["science fiction", "novel", "adventure"],
-    hasMovieAdaptation: true,
+    hasMovieAdaptation: false, //original true, ma adaptaci
     pages: 658,
     translations: {
       spanish: "",
