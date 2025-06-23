@@ -4,14 +4,7 @@ const data = [
     title: "The Lord of the Rings",
     publicationDate: "1954-07-29",
     author: "J. R. R. Tolkien",
-    genres: [
-      "fantasy",
-      "high-fantasy",
-      "adventure",
-      "fiction",
-      "novels",
-      "literature",
-    ],
+    genres: ["fantasy", "high-fantasy", "adventure", "fiction", "novels", "literature"],
     hasMovieAdaptation: true,
     pages: 1216,
     translations: {
@@ -37,13 +30,7 @@ const data = [
     title: "The Cyberiad",
     publicationDate: "1965-01-01",
     author: "Stanislaw Lem",
-    genres: [
-      "science fiction",
-      "humor",
-      "speculative fiction",
-      "short stories",
-      "fantasy",
-    ],
+    genres: ["science fiction", "humor", "speculative fiction", "short stories", "fantasy"],
     hasMovieAdaptation: false,
     pages: 295,
     translations: {},
@@ -142,3 +129,75 @@ function getBooks() {
 function getBook(id) {
   return data.find((d) => d.id === id);
 }
+// MAP METHOD
+function getTotalReviewCount(book) {
+  const goodReads = book.reviews?.goodreads?.reviewsCount;
+  const librarything = book.reviews?.librarything?.reviewsCount ?? 0;
+
+  return goodReads + librarything;
+}
+
+const books = getBooks();
+
+const arr = [1, 2, 3, 4].map((el) => el * 2);
+
+const titles = books.map((el) => el.title);
+//titles;
+
+const essentialData = books.map((el) => {
+  return {
+    title: el.title,
+    author: el.author,
+    reviewsCount: getTotalReviewCount(el),
+  };
+});
+
+//essentialData;
+
+// FILTER METHOD
+
+const filteredBooks = books
+  .filter((b) => b.pages > 500)
+  .filter((b) => b.hasMovieAdaptation)
+  .filter((b) => b.id === 1);
+//filteredBooks;
+
+const adventureBook = books.filter((b) => b.genres.includes("adventure")).map((b) => b.title);
+//adventureBook;
+
+// THE REDUCE METHOD
+
+const allBooksPages = books.reduce((acc, book) => acc + book.pages, 0);
+//allBooksPages;
+
+// THE SORT METHOD - !! it mutates original array !! can workaround with slice() method
+
+const array = [3, 1, 5, 2, 4, 7, 6];
+//const sorted = array.sort((a, b) => a - b);
+//sorted;
+//array;
+const sortedSlice = array.slice().sort((a, b) => a - b);
+//sortedSlice;
+//array;
+const sortedByPages = books.slice().sort((a, b) => a.pages - b.pages);
+//sortedByPages;
+
+// WORKING WITH IMUTABLE ARRAYS
+
+// 1) Add a book object to array
+const newBook = {
+  id: 6,
+  name: "nameOfTheBook",
+  author: "authorOfTheBook",
+};
+
+const booksAfterAdd = [...books, newBook];
+//booksAfterAdd;
+
+// 2) Delete the book from the array
+const booksAfterDelete = booksAfterAdd.filter((b) => b.id !== 5);
+//booksAfterDelete;
+
+// 3) Update a book object in the array
+const booksAfterUpdate = booksAfterDelete.map((book) => (book.id === 6 ? { ...book, author: "some name" } : book));
+//booksAfterUpdate;
