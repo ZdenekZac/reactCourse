@@ -42,7 +42,7 @@ const data = [
       "humor",
       "speculative fiction",
       "short stories",
-      "fantasy",
+      "fantasy"
     ],
     hasMovieAdaptation: false,
     pages: 295,
@@ -66,7 +66,7 @@ const data = [
     publicationDate: "1965-01-01",
     author: "Frank Herbert",
     genres: ["science fiction", "novel", "adventure"],
-    hasMovieAdaptation: true,
+    hasMovieAdaptation: false, //original true, ma adaptaci
     pages: 658,
     translations: {
       spanish: "",
@@ -142,3 +142,114 @@ function getBooks() {
 function getBook(id) {
   return data.find((d) => d.id === id);
 }
+
+// DESTRUCTURING
+
+const book = getBook(3);
+
+// const title = book.title;
+// const author = book.author;
+const {title, author, id, publicationDate, pages, genres, hasMovieAdaptation} = book;
+//book;
+//console.log(title,author,genres);
+
+//const primarzGenre = genres[0];
+//const secondaryGenre = genres[1];
+
+//const [primarzGenre, secondaryGenre, thirdGenre ] = genres;
+
+
+// REST OPERATOR
+
+const [primarzGenre, secondaryGenre, ...otherGenre ] = genres;
+//console.log(primarzGenre, secondaryGenre, otherGenre);
+//console.log(genres);
+
+const newGenres = [...genres, "testingGenrePico"]
+//newGenres;
+
+// UPDATING OBJECT
+
+const updatedBook = {...book, MOVIEPublicationDate: "10.10.2009", pages: 22222};
+//updatedBook;
+
+// ARROW FUNCTIONS
+
+// function getYear(str){
+// 	return str.split('-')[0];
+// }
+
+const getYear = (str) => str.split("-")[0]
+//console.log(getYear(publicationDate));
+
+
+// TEMPLATE LITERALS
+
+const summary = `a book is ${book.title}, it has ${pages} pages, was written by ${author} and published in ${getYear(publicationDate)}. The book has${hasMovieAdaptation ? "" : "not"} been adapted as a movie`
+// summary
+
+// TERNARIES INSTED OF IF-ELSE STATEMENT
+
+const pagesRange = pages > 1000 ? "over a thousand" : "less than 1000";
+//pagesRange
+
+// SHORT CIRCUTING AND LOGICAL OPERATORS &&, ||, ??
+
+// console.log(true && 'some string');
+// console.log(false && 'some string');
+// console.log(hasMovieAdaptation && 'this book has been filmed');
+
+// // falsy: 0, '', null, undefined
+// console.log("jonas"&&'some string after jonas');
+// console.log(0 && 'some string after 0');
+// console.log(null && 'some string after null');
+
+// console.log(true || 'some string');
+// console.log(false || 'some string');
+
+// console.log(book.translations.spanish);
+
+const spanishTranslation = book.translations.spanish || "not translated";
+//spanishTranslation
+
+// console.log(book.reviews.librarything.reviewsCount);
+// const countwrong = book.reviews.librarything.reviewsCount || "no data"
+// countwrong
+
+// ?? returns only with null or undefined
+// const count = book.reviews.librarything.reviewsCount ?? "no data";
+// count
+
+// OPTIONAL CHAINING - ?;
+
+function getTotalReviewCount(book){
+	const goodreads = book.reviews?.goodreads?.reviewsCount;
+	const librarything = book.reviews?.librarything?.reviewsCount ?? 0;
+	//librarything
+	return goodreads + librarything;
+}
+//console.log(getTotalReviewCount(book));
+
+// THE ARRAY MAP METHOD
+
+const books = getBooks();
+
+const x = [1,2,3,4,].map((x)=> x * 2);
+
+const titles = books.map((b)=> b.title);
+
+const essentialData = books.map((b)=>{
+	return{
+		author: b.author,
+		book: b.title,
+		reviewsCount: getTotalReviewCount(b)
+	}
+});
+//essentialData
+
+// THE FILTER METHOD
+
+const longBooks = books.filter((b)=> b.pages > 500).filter((b)=> b.hasMovieAdaptation)
+//longBooks
+
+const adventureBooks = books.filter((b)=> b.genres.includes("adventure"));
