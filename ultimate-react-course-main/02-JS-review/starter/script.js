@@ -211,3 +211,5 @@ const booksAfterDelete = booksAfterAdd.filter((b) => b.id !== 5);
 // 3) Update a book object in the array
 const booksAfterUpdate = booksAfterDelete.map((book) => (book.id === 6 ? { ...book, author: "some name" } : book));
 //booksAfterUpdate;
+
+//
