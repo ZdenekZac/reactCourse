@@ -30,17 +30,7 @@ const data = [
     title: "The Cyberiad",
     publicationDate: "1965-01-01",
     author: "Stanislaw Lem",
-<<<<<<< HEAD
     genres: ["science fiction", "humor", "speculative fiction", "short stories", "fantasy"],
-=======
-    genres: [
-      "science fiction",
-      "humor",
-      "speculative fiction",
-      "short stories",
-      "fantasy"
-    ],
->>>>>>> da4a21dcf42c4c25d7e98546ef0694bd9e8bd81f
     hasMovieAdaptation: false,
     pages: 295,
     translations: {},
@@ -211,3 +201,24 @@ const booksAfterDelete = booksAfterAdd.filter((b) => b.id !== 5);
 // 3) Update a book object in the array
 const booksAfterUpdate = booksAfterDelete.map((book) => (book.id === 6 ? { ...book, author: "some name" } : book));
 //booksAfterUpdate;
+
+//ASYNCHRONOUS JS: PROMISES
+// const ftch = fetch("https://jsonplaceholder.typicode.com/todos/1")
+//   .then((res) => res.json())
+//   .then((data) => console.log(data));
+
+//   console.log("fetch fetch");
+
+async function getTodos() {
+  const res = await fetch("https://jsonplaceholder.typicode.com/todos/1");
+  const data = await res.json();
+  console.log(data);
+
+  return data;
+}
+
+const todos = getTodos();
+
+console.log(todos);
+
+console.log("test");
