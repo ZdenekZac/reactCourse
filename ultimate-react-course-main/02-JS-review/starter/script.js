@@ -184,19 +184,20 @@ const sortedByPages = books.slice().sort((a, b) => a.pages - b.pages);
 
 // WORKING WITH IMUTABLE ARRAYS
 
-// 1) Add a book object to array
+
 const newBook = {
-  id: 6,
-  name: "nameOfTheBook",
-  author: "authorOfTheBook",
-};
+	id: 6,
+	name: "some name of the book",
+	author: "some name of the author"
+}
 
-const booksAfterAdd = [...books, newBook];
-//booksAfterAdd;
+//1) Add a book object in the array
+const afterAdd = [...books, newBook];
+//afterAdd
 
-// 2) Delete the book from the array
-const booksAfterDelete = booksAfterAdd.filter((b) => b.id !== 5);
-//booksAfterDelete;
+// 2) Delete book object from an array
+const deletedBooks = afterAdd.filter((b)=>b.id !== 5);
+//deletedBooks
 
 // 3) Update a book object in the array
 const booksAfterUpdate = booksAfterDelete.map((book) => (book.id === 6 ? { ...book, author: "some name" } : book));
