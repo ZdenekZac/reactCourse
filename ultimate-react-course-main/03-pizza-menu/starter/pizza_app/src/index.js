@@ -67,31 +67,42 @@ function Header() {
 
 function Menu() {
   const pizzas = pizzaData;
-  const numPizzas = [];
+  //const pizzas = [];
+  const numPizzas = pizzas.length;
 
   return (
     <main className="menu">
       <h2>Our Menu</h2>
+
       {numPizzas > 0 ? (
-        <ul className="pizzas">
-          {pizzaData.map((p) => (
-            <Pizza pizzaObj={p} key={p.name} />
-          ))}
-        </ul>
+        <>
+          <p>
+            Athentic Italian cuisine. 6 creative dishes to choose from. All from our stone oven, all organic, all
+            delicious
+          </p>
+          <ul className="pizzas">
+            {pizzas.map((p) => (
+              <Pizza pizzaObj={p} key={p.name} />
+            ))}
+          </ul>
+        </>
       ) : (
-        "We are working on it"
+        <p>We are still working on our menu</p>
       )}
     </main>
   );
 }
 
-function Pizza(props) {
+function Pizza({ pizzaObj }) {
+  //if (pizzaObj.soldOut) return null;
+
   return (
-    <li className="pizza">
-      <img src={props.pizzaObj.photoName} alt={props.pizzaObj.name} />
+    <li className={`pizza ${pizzaObj.soldOut ? "sold-out" : ""}`}>
+      <img src={pizzaObj.photoName} alt={pizzaObj.name} />
       <div>
-        <h3>{props.pizzaObj.name}</h3>
-        <p>{props.pizzaObj.ingredients}</p>
+        <h3>{pizzaObj.name}</h3>
+        <p>{pizzaObj.ingredients}</p>
+        <span>{pizzaObj.soldOut ? "SOLD OUT" : pizzaObj.price}</span>
       </div>
     </li>
   );
@@ -100,22 +111,32 @@ function Pizza(props) {
 function Footer() {
   const hour = new Date().getHours();
   const opening = 9;
-  const closing = 21;
-  const isOpen = hour >= opening && hour <= closing;
+  const closing = 23;
+  const isOpen = hour >= opening && hour < closing;
+  console.log(hour);
+  //   if (!isOpen) return <p>CLOSED</p>;
 
   return (
     <footer className="footer">
       {isOpen ? (
-        <div className="order">
-          <p>We are open untill {closing}</p>
-          <button className="btn">Order Now</button>
-        </div>
+        <Order openHour={opening} closeHour={closing} />
       ) : (
         <p>
           we are happy to see you between {opening} and {closing}
         </p>
       )}
     </footer>
+  );
+}
+
+function Order({ openHour, closeHour }) {
+  return (
+    <div className="order">
+      <p>
+        We are open from {openHour} untill {closeHour}
+      </p>
+      <button className="btn">Order Now</button>
+    </div>
   );
 }
 
