@@ -20,7 +20,7 @@ body {
 }
 
 /* přiřazení oblastí bez classnames */
-.app > header {
+.app > .menu {
   grid-area: a;
   height: 5rem;
 }
@@ -32,10 +32,11 @@ body {
 }
 
 .app > * {
-  border: 2px solid #000;
+  border: 1px solid #000;
+  border-radius: 0.2rem;
 }
 
-header {
+.menu {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -51,4 +52,48 @@ header {
   position: absolute;
   right: 1.9rem;
   top: 0.9rem;
+
+    display: flex;
+  align-items: center;   /* vertikální zarovnání */
+  justify-content: center; /* horizontální zarovnání */
+  color: white; /* aby číslo bylo vidět */
+  font-size: 0.9rem;
+}
+
+.dropdown img{
+	cursor: pointer;
+}
+
+.dropdown img:hover{
+	scale: 1.1;
+	box-shadow: 1.2 3.4 5;
+}
+
+.dropdown-menu {
+	position: absolute;
+    list-style: none;
+    top: -1.1rem;
+    left: -0.1rem;
+    padding: 0;
+    width: 20%;
+    border: 1px solid #000;
+	background-color: #fff;
+    opacity: 0; /* pro plynulý efekt */
+    transition: opacity 0.2s ease-in-out;
+	pointer-events: none;
+}
+
+.dropdown:hover .dropdown-menu {
+    pointer-events: auto;
+    opacity: 1;
+}
+.dropdown-menu li{
+    font-size: 2.4rem;
+    font-size: 1.5rem;
+    display: flex;
+    justify-content: center;
+	text-transform: uppercase;
+}
+.dropdown-menu li:hover{
+	background-color: #cecccc;
 }
