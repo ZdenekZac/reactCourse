@@ -53,7 +53,7 @@ body {
   right: 1.9rem;
   top: 0.9rem;
 
-    display: flex;
+	display: flex;
   align-items: center;   /* vertikální zarovnání */
   justify-content: center; /* horizontální zarovnání */
   color: white; /* aby číslo bylo vidět */
@@ -79,7 +79,7 @@ body {
     border: 1px solid #000;
 	background-color: #fff;
     opacity: 0; /* pro plynulý efekt */
-    transition: opacity 0.2s ease-in-out;
+    transition: opacity 0.4s ease-in-out;
 	pointer-events: none;
 }
 
@@ -96,4 +96,10 @@ body {
 }
 .dropdown-menu li:hover{
 	background-color: #cecccc;
+}
+
+.item{
+	border: 1px solid #000;
+	width: 10rem;
+	height: 12rem;
 }

@@ -44,7 +44,11 @@ function Dropdown({onSelect}){
 }
 
 function Main() {
-  return <main></main>;
+  return <main>
+	<div className="item">
+		<img src="/Assets/beanie.svg" alt="beanie"/>
+	</div>
+  </main>;
 }
 function Aside() {
   return <aside>Aside</aside>;
