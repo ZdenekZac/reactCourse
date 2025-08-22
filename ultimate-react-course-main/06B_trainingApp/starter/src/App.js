@@ -1,4 +1,8 @@
+import { useState } from "react";
 import "./App.css";
+import { hats, bicycles } from "./items.js";
+console.log(hats, bicycles);
+
 
 const dropdownMenuItems = [
 	{name: "hats", value:"hats"},
@@ -9,12 +13,15 @@ const dropdownMenuItems = [
 	{name: "t-shirts", value:"tshirts"},
 ]
 
+
 export default function App() {
+	
   return (
     <div className="app">
       <Menu />
       <Main />
       <Aside />
+	  
     </div>
   );
 }
@@ -44,27 +51,40 @@ function Dropdown({onSelect}){
 }
 
 function Main() {
+	const [amount, setAmount] = useState("");
   return <main>
-	<div className="item">
-        <h3>Beanie 1</h3>
+	{/* <Item amount={amount} setAmount={setAmount}/> */}
+	{hats.map((h,i)=> 
+		<Item header={h.name} key={h.id} i={i + 1} price={h.price}/>
+	)}
+  </main>;
+}
+
+function Item({amount, setAmount, header, i, price }){
+	return (
+			<div className="item">
+        <h3>{header} {i}</h3> 
         <img src="/Assets/beanie.svg" alt="beanie" />
 		<h4>Enter amount:</h4>
 		<div className="counterContainer">
-			<Button>+</Button>
-			<input type="text" value={0} id="1" name="counter"/>
-			<Button>-</Button>
+			<Button onClick={()=> {setAmount(Number(amount + 1));
+			}}>+</Button>
+			<input type="text" onChange={(e)=> e.target.value} value={amount} id="1" name="counter"/>
+			{/* <span>{amount}</span> */}
+			<Button onClick={()=> setAmount(Number(amount - 1))}>-</Button>
 		</div>
-		<h4>Total Price:</h4>
-		<h3>$ 34</h3>
+		<h4>Price:</h4>
+		<h3>$ {price}</h3>
 		<Button>Add to Cart</Button>
 	</div>
-
-  </main>;
+	)
 }
+
 function Aside() {
   return <aside>Aside</aside>;
 }
 
-function Button({children}){
-	return <button>{children}</button>
+function Button({children, onClick}){
+	return <button onClick={onClick}>{children}</button>
 }
+
