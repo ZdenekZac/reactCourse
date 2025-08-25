@@ -1,78 +1,107 @@
 import { useState } from "react";
 import "./App.css";
-import { hats, bicycles } from "./items.js";
-console.log(hats, bicycles);
+import { hats, bicycles, glasses, shoes, hoodies, tshirts } from "./items.js";
 
 
 const dropdownMenuItems = [
 	{name: "hats", value:"hats"},
 	{name: "bicycles", value:"bicy"},
 	{name: "shoes", value:"shoes"},
-	{name: "eyeglasses", value:"eyes"},
+	{name: "glasses", value:"glasses"},
 	{name: "hoodies", value:"hoodies"},
 	{name: "t-shirts", value:"tshirts"},
 ]
 
 
 export default function App() {
-	
+	const [dropdownItem, setDropdownItem] = useState("");
+	const [selectedItems, setSelectedItems] = useState("")
+
+	function handleSetDropdown(value){
+		setDropdownItem(value)
+		console.log(value)
+	}
+
+
+
   return (
     <div className="app">
-      <Menu />
-      <Main />
+      <Menu onSetDropdown={handleSetDropdown}/>
+      <Main dropdownItem={dropdownItem} />
       <Aside />
 	  
     </div>
   );
 }
 
-function Menu() {
+function Menu({onSetDropdown}) {
   return (
     <div className="menu">
-      <Dropdown onSelect={(val)=> console.log(val)
-	  }/>
+      <Dropdown  onSetDropdown={onSetDropdown}/>
 	  <img src="/Assets/shopping-cart.svg" alt="shopping_cart" />
       <span className="span-menu">3</span>
     </div>
   );
 }
 
-function Dropdown({onSelect}){
+function Dropdown({onSetDropdown}){
 	return (
 		<div className="dropdown">
 			<img src="/Assets/list.svg" alt="menu" />
 			<ul className="dropdown-menu">
 				{dropdownMenuItems.map((item, i) =>
-					<li key={i} onClick={()=> onSelect(item.value)}>{item.name}</li>
+					<li key={i} onClick={()=> onSetDropdown(item.value)}>{item.name}</li>
 				)}
 			</ul>
 		</div>
 	)
 }
 
-function Main() {
-	const [amount, setAmount] = useState("");
+function Main({dropdownItem}) {
+		console.log(dropdownItem);
+	let items;
+	
+	if(dropdownItem === "hats") items = hats;
+	else if(dropdownItem === "bicy") items = bicycles;
+	else if(dropdownItem === "shoes") items = shoes;
+	else if(dropdownItem === "glasses") items = glasses;
+	else if(dropdownItem === "hoodies") items = hoodies;
+	else if(dropdownItem === "tshirts") items = tshirts;
+
   return <main>
-	{/* <Item amount={amount} setAmount={setAmount}/> */}
-	{hats.map((h,i)=> 
-		<Item header={h.name} key={h.id} i={i + 1} price={h.price}/>
-	)}
+
+{items &&	<div className="filter">
+		<label><img src="./Assets/filter.svg"/></label>
+		{/* <p>Filter price by: </p> */}
+		<select>
+			<option></option>
+			<option value={"highest"}>By highest</option>
+			<option value={"lowest"}>By lowest</option>
+		</select>
+	</div>}
+
+	<div className="main">
+	{!items && <p style={{color: "red", fontSize: "4rem"}}>Pick some item from menu</p>}
+	{ items?.map((h,i)=> 
+		<Item header={h.name} key={h.id} img={h.img} i={i + 1} price={h.price}/>
+	)} 
+	</div>
   </main>;
 }
 
-function Item({amount, setAmount, header, i, price }){
+function Item({amount, setAmount,img, header, i, price }){
 	return (
-			<div className="item">
-        <h3>{header} {i}</h3> 
-        <img src="/Assets/beanie.svg" alt="beanie" />
-		<h4>Enter amount:</h4>
-		<div className="counterContainer">
-			<Button onClick={()=> {setAmount(Number(amount + 1));
-			}}>+</Button>
-			<input type="text" onChange={(e)=> e.target.value} value={amount} id="1" name="counter"/>
-			{/* <span>{amount}</span> */}
-			<Button onClick={()=> setAmount(Number(amount - 1))}>-</Button>
-		</div>
+		<div className="item">
+        	<h3>{header} {i}</h3> 
+        	<img src={img} alt={header} />
+			<h4>Enter amount:</h4>
+			<div className="counterContainer">
+				<Button onClick={()=> {setAmount(Number(amount + 1))
+				}}>+</Button>
+				<input type="text" onChange={(e)=> e.target.value} value={amount} id="1" name="counter"/>
+				{/* <span>{amount}</span> */}
+				<Button onClick={()=> setAmount(Number(amount - 1))}>-</Button>
+			</div>
 		<h4>Price:</h4>
 		<h3>$ {price}</h3>
 		<Button>Add to Cart</Button>

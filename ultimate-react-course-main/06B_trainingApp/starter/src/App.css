@@ -10,7 +10,7 @@ body {
   margin: 0 auto;
   display: grid;
   height: 90vh;
-  width: 70%;
+  width: 50%;
   grid-template-columns: 3fr 1fr; /* 3/4 a 1/4 */
   grid-template-rows: auto 1fr; /* menu podle obsahu, zbytek vyplnit */
   grid-template-areas:
@@ -102,13 +102,20 @@ body {
 
 /* MAIN ITEMS SECTION */
 
-main {
+.main {
   padding: 1rem;
+  display: grid;
+	grid-template-columns: auto auto auto;
+	gap: 2rem;
+}
+
+.filter{
+	display: flex;
+	padding: 1rem;
 }
 
 .item {
-  border: 2px solid #000;
-  width: 20rem;
+  border: 1px solid #000;
   height: 24rem;
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -135,7 +142,7 @@ main {
 	height: 2rem;
 }
 
-main h4{
+.main h4{
 	margin: 0;
 	padding: 0;
 	align-self: center;
@@ -160,9 +167,9 @@ main h4{
 	background-color: #efebeb;
 }
 
-main input {
+.main input {
 	font-size: .8rem;
-	width: 2rem;
+	width: 3rem;
 }
 
 button{
