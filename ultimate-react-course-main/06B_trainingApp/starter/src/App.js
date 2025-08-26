@@ -15,19 +15,21 @@ const dropdownMenuItems = [
 
 export default function App() {
 	const [dropdownItem, setDropdownItem] = useState("");
-	const [selectedItems, setSelectedItems] = useState("")
+	const [sortBy, setSortBy] = useState("");
 
 	function handleSetDropdown(value){
 		setDropdownItem(value)
-		console.log(value)
+		handleSetSortBy("-")
 	}
 
-
+	function handleSetSortBy(val){
+		setSortBy(val)
+	}
 
   return (
     <div className="app">
       <Menu onSetDropdown={handleSetDropdown}/>
-      <Main dropdownItem={dropdownItem} />
+      <Main  dropdownItem={dropdownItem} sortBy={sortBy} onSortBy={handleSetSortBy}/>
       <Aside />
 	  
     </div>
@@ -57,8 +59,8 @@ function Dropdown({onSetDropdown}){
 	)
 }
 
-function Main({dropdownItem}) {
-		console.log(dropdownItem);
+function Main({dropdownItem, onSortBy, sortBy}) {
+
 	let items;
 	
 	if(dropdownItem === "hats") items = hats;
@@ -68,40 +70,48 @@ function Main({dropdownItem}) {
 	else if(dropdownItem === "hoodies") items = hoodies;
 	else if(dropdownItem === "tshirts") items = tshirts;
 
+	let sortedItems;
+
+	sortedItems = 
+	sortBy === "highest" ? items.slice().sort((a,b)=> b.price - a.price) : 
+	sortBy === "lowest" ? items.slice().sort((a,b)=> a.price - b.price) : 
+	sortBy === "sold" ? items.slice().filter((it)=> it.instock) :
+	items;
+
   return <main>
 
-{items &&	<div className="filter">
+	{items &&	<div className="filter">
 		<label><img src="./Assets/filter.svg"/></label>
 		{/* <p>Filter price by: </p> */}
-		<select>
-			<option></option>
+		<select value={sortBy} onChange={(e)=> onSortBy(e.target.value)}>
+			<option>No filter</option>
 			<option value={"highest"}>By highest</option>
 			<option value={"lowest"}>By lowest</option>
+			<option value={"sold"}>In stock</option>
 		</select>
 	</div>}
 
 	<div className="main">
 	{!items && <p style={{color: "red", fontSize: "4rem"}}>Pick some item from menu</p>}
-	{ items?.map((h,i)=> 
-		<Item header={h.name} key={h.id} img={h.img} i={i + 1} price={h.price}/>
+	{ sortedItems?.map((h,i)=> 
+		<Item amount={h.amount} header={h.name} key={h.id} img={h.img} id={h.id} price={h.price}/>
 	)} 
 	</div>
   </main>;
 }
 
-function Item({amount, setAmount,img, header, i, price }){
+function Item({amount,img, header, id, price }){
 	return (
 		<div className="item">
-        	<h3>{header} {i}</h3> 
+        	<h3>{header} {id}</h3> 
         	<img src={img} alt={header} />
 			<h4>Enter amount:</h4>
 			<div className="counterContainer">
-				<Button onClick={()=> {setAmount(Number(amount + 1))
-				}}>+</Button>
+				<Button >+</Button>
 				<input type="text" onChange={(e)=> e.target.value} value={amount} id="1" name="counter"/>
 				{/* <span>{amount}</span> */}
-				<Button onClick={()=> setAmount(Number(amount - 1))}>-</Button>
-			</div>
+				<Button >-</Button>
+		</div>
 		<h4>Price:</h4>
 		<h3>$ {price}</h3>
 		<Button>Add to Cart</Button>
