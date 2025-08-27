@@ -1,52 +1,62 @@
+export const dropdownMenuItems = [
+  { name: "hats", value: "hats" },
+  { name: "bicycles", value: "bicy" },
+  { name: "shoes", value: "shoes" },
+  { name: "glasses", value: "glasses" },
+  { name: "hoodies", value: "hoodies" },
+  { name: "t-shirts", value: "tshirts" },
+];
+
 export const hats = [
-  { name: "Beanie", id: "1", price: 11, img: "/Assets/beanie.svg" },
-  { name: "Beanie", id: "2", price: 12, img: "/Assets/beanie.svg" },
-  { name: "Beanie", id: "3", price: 13, img: "/Assets/beanie.svg" },
-  { name: "Beanie", id: "4", price: 14, img: "/Assets/beanie.svg" },
-  { name: "Beanie", id: "5", price: 15, img: "/Assets/beanie.svg" },
-  { name: "Beanie", id: "6", price: 16, img: "/Assets/beanie.svg" },
+  { amount: 1, name: "Beanie", id: "b2", price: 12, img: "/Assets/beanie.svg", instock: false },
+  { amount: 1, name: "Beanie", id: "b1", price: 11, img: "/Assets/beanie.svg", instock: true },
+  { amount: 1, name: "Beanie", id: "b3", price: 13, img: "/Assets/beanie.svg", instock: false },
+  { amount: 1, name: "Beanie", id: "b5", price: 15, img: "/Assets/beanie.svg", instock: false },
+  { amount: 1, name: "Beanie", id: "b6", price: 16, img: "/Assets/beanie.svg", instock: true },
+  { amount: 1, name: "Beanie", id: "b4", price: 14, img: "/Assets/beanie.svg", instock: false },
 ];
 
 export const bicycles = [
-  { name: "Bicycle", id: "1", price: 1001, img: "/Assets/bicycle.svg" },
-  { name: "Bicycle", id: "2", price: 1002, img: "/Assets/bicycle.svg" },
-  { name: "Bicycle", id: "3", price: 1003, img: "/Assets/bicycle.svg" },
-  { name: "Bicycle", id: "4", price: 1004, img: "/Assets/bicycle.svg" },
-  { name: "Bicycle", id: "5", price: 1005, img: "/Assets/bicycle.svg" },
-  { name: "Bicycle", id: "6", price: 1006, img: "/Assets/bicycle.svg" },
+  { amount: 1, name: "Bicycle", id: "c2", price: 1002, img: "/Assets/bicycle.svg", instock: false },
+  { amount: 1, name: "Bicycle", id: "c4", price: 1004, img: "/Assets/bicycle.svg", instock: false },
+  { amount: 1, name: "Bicycle", id: "c3", price: 1003, img: "/Assets/bicycle.svg", instock: false },
+  { amount: 1, name: "Bicycle", id: "c1", price: 1001, img: "/Assets/bicycle.svg", instock: true },
+  { amount: 1, name: "Bicycle", id: "c6", price: 1006, img: "/Assets/bicycle.svg", instock: true },
+  { amount: 1, name: "Bicycle", id: "c5", price: 1005, img: "/Assets/bicycle.svg", instock: false },
 ];
 
 export const shoes = [
-  { name: "Shoes", id: "1", price: 101, img: "/Assets/boot.svg" },
-  { name: "Shoes", id: "2", price: 102, img: "/Assets/boot.svg" },
-  { name: "Shoes", id: "3", price: 103, img: "/Assets/boot.svg" },
-  { name: "Shoes", id: "4", price: 104, img: "/Assets/boot.svg" },
-  { name: "Shoes", id: "5", price: 105, img: "/Assets/boot.svg" },
-  { name: "Shoes", id: "6", price: 106, img: "/Assets/boot.svg" },
+  { amount: 1, name: "Shoes", id: "s2", price: 102, img: "/Assets/boot.svg", instock: false },
+  { amount: 1, name: "Shoes", id: "s1", price: 101, img: "/Assets/boot.svg", instock: true },
+  { amount: 1, name: "Shoes", id: "s4", price: 104, img: "/Assets/boot.svg", instock: false },
+  { amount: 1, name: "Shoes", id: "s3", price: 103, img: "/Assets/boot.svg", instock: false },
+  { amount: 1, name: "Shoes", id: "s6", price: 106, img: "/Assets/boot.svg", instock: true },
+  { amount: 1, name: "Shoes", id: "s5", price: 105, img: "/Assets/boot.svg", instock: false },
 ];
+
 export const glasses = [
-  { name: "Glasses", id: "1", price: 21, img: "/Assets/eyeglasses.svg" },
-  { name: "Glasses", id: "2", price: 22, img: "/Assets/eyeglasses.svg" },
-  { name: "Glasses", id: "3", price: 23, img: "/Assets/eyeglasses.svg" },
-  { name: "Glasses", id: "4", price: 24, img: "/Assets/eyeglasses.svg" },
-  { name: "Glasses", id: "5", price: 25, img: "/Assets/eyeglasses.svg" },
-  { name: "Glasses", id: "6", price: 26, img: "/Assets/eyeglasses.svg" },
+  { amount: 1, name: "Glasses", id: "g6", price: 26, img: "/Assets/eyeglasses.svg", instock: true },
+  { amount: 1, name: "Glasses", id: "g2", price: 22, img: "/Assets/eyeglasses.svg", instock: false },
+  { amount: 1, name: "Glasses", id: "g4", price: 24, img: "/Assets/eyeglasses.svg", instock: false },
+  { amount: 1, name: "Glasses", id: "g3", price: 23, img: "/Assets/eyeglasses.svg", instock: false },
+  { amount: 1, name: "Glasses", id: "g5", price: 25, img: "/Assets/eyeglasses.svg", instock: false },
+  { amount: 1, name: "Glasses", id: "g1", price: 21, img: "/Assets/eyeglasses.svg", instock: true },
 ];
 
 export const hoodies = [
-  { name: "Hoody", id: "1", price: 31, img: "/Assets/hoodie.svg" },
-  { name: "Hoody", id: "2", price: 32, img: "/Assets/hoodie.svg" },
-  { name: "Hoody", id: "3", price: 33, img: "/Assets/hoodie.svg" },
-  { name: "Hoody", id: "4", price: 34, img: "/Assets/hoodie.svg" },
-  { name: "Hoody", id: "5", price: 35, img: "/Assets/hoodie.svg" },
-  { name: "Hoody", id: "6", price: 36, img: "/Assets/hoodie.svg" },
+  { amount: 1, name: "Hoody", id: "h2", price: 32, img: "/Assets/hoodie.svg", instock: false },
+  { amount: 1, name: "Hoody", id: "h1", price: 31, img: "/Assets/hoodie.svg", instock: true },
+  { amount: 1, name: "Hoody", id: "h4", price: 34, img: "/Assets/hoodie.svg", instock: false },
+  { amount: 1, name: "Hoody", id: "h3", price: 33, img: "/Assets/hoodie.svg", instock: false },
+  { amount: 1, name: "Hoody", id: "h6", price: 36, img: "/Assets/hoodie.svg", instock: true },
+  { amount: 1, name: "Hoody", id: "h5", price: 35, img: "/Assets/hoodie.svg", instock: false },
 ];
 
 export const tshirts = [
-  { name: "T-Shirt", id: "1", price: 11, img: "/Assets/t-shirt.svg" },
-  { name: "T-Shirt", id: "2", price: 12, img: "/Assets/t-shirt.svg" },
-  { name: "T-Shirt", id: "3", price: 13, img: "/Assets/t-shirt.svg" },
-  { name: "T-Shirt", id: "4", price: 14, img: "/Assets/t-shirt.svg" },
-  { name: "T-Shirt", id: "5", price: 15, img: "/Assets/t-shirt.svg" },
-  { name: "T-Shirt", id: "6", price: 16, img: "/Assets/t-shirt.svg" },
+  { amount: 1, name: "T-Shirt", id: "t2", price: 12, img: "/Assets/t-shirt.svg", instock: false },
+  { amount: 1, name: "T-Shirt", id: "t1", price: 11, img: "/Assets/t-shirt.svg", instock: true },
+  { amount: 1, name: "T-Shirt", id: "t4", price: 14, img: "/Assets/t-shirt.svg", instock: false },
+  { amount: 1, name: "T-Shirt", id: "t3", price: 13, img: "/Assets/t-shirt.svg", instock: false },
+  { amount: 1, name: "T-Shirt", id: "t6", price: 16, img: "/Assets/t-shirt.svg", instock: true },
+  { amount: 1, name: "T-Shirt", id: "t5", price: 15, img: "/Assets/t-shirt.svg", instock: false },
 ];

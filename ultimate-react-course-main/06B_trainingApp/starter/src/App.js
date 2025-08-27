@@ -1,29 +1,38 @@
 import { useState } from "react";
 import "./App.css";
-import { hats, bicycles, glasses, shoes, hoodies, tshirts } from "./items.js";
-
-const dropdownMenuItems = [
-  { name: "hats", value: "hats" },
-  { name: "bicycles", value: "bicy" },
-  { name: "shoes", value: "shoes" },
-  { name: "glasses", value: "glasses" },
-  { name: "hoodies", value: "hoodies" },
-  { name: "t-shirts", value: "tshirts" },
-];
+import { dropdownMenuItems, hats, bicycles, glasses, shoes, hoodies, tshirts } from "./items.js";
 
 export default function App() {
-  const [dropdownItem, setDropdownItem] = useState("");
-  const [selectedItems, setSelectedItems] = useState("");
+  const [sortBy, setSortBy] = useState("");
+  const [items, setItems] = useState();
 
-  function handleSetDropdown(value) {
-    setDropdownItem(value);
-    console.log(value);
+  function handleSetDropdown(val) {
+    setItems(
+      val === "hats"
+        ? hats
+        : val === "bicy"
+        ? bicycles
+        : val === "shoes"
+        ? shoes
+        : val === "glasses"
+        ? glasses
+        : val === "hoodies"
+        ? hoodies
+        : val === "tshirts"
+        ? tshirts
+        : []
+    );
+    handleSetSortBy("-");
+  }
+
+  function handleSetSortBy(val) {
+    setSortBy(val);
   }
 
   return (
     <div className="app">
       <Menu onSetDropdown={handleSetDropdown} />
-      <Main dropdownItem={dropdownItem} />
+      <Main items={items} sortBy={sortBy} onSortBy={handleSetSortBy} />
       <Aside />
     </div>
   );
@@ -54,33 +63,33 @@ function Dropdown({ onSetDropdown }) {
   );
 }
 
-function Main({ dropdownItem }) {
-  const [sortBy, setSortBy] = useState("");
-
-  let items;
-
-  if (dropdownItem === "hats") items = hats;
-  else if (dropdownItem === "bicy") items = bicycles;
-  else if (dropdownItem === "shoes") items = shoes;
-  else if (dropdownItem === "glasses") items = glasses;
-  else if (dropdownItem === "hoodies") items = hoodies;
-  else if (dropdownItem === "tshirts") items = tshirts;
-
+function Main({ onSortBy, items, sortBy }) {
   let sortedItems;
 
-  sortedItems = sortBy === "highest" ? items.slice().sort((a, b) => b.price - a.price) : items;
+  sortedItems =
+    sortBy === "highest"
+      ? items.slice().sort((a, b) => b.price - a.price)
+      : sortBy === "lowest"
+      ? items.slice().sort((a, b) => a.price - b.price)
+      : sortBy === "sold"
+      ? items.slice().filter((it) => it.instock)
+      : items;
+
+  console.log(sortedItems);
 
   return (
     <main>
       {items && (
         <div className="filter">
           <label>
-            <img src="./Assets/filter.svg" alt="filter_icon" />
+            <img src="./Assets/filter.svg" />
           </label>
-          <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
-            <option value={""}></option>
+          {/* <p>Filter price by: </p> */}
+          <select value={sortBy} onChange={(e) => onSortBy(e.target.value)}>
+            <option>No filter</option>
             <option value={"highest"}>By highest</option>
             <option value={"lowest"}>By lowest</option>
+            <option value={"sold"}>In stock</option>
           </select>
         </div>
       )}
@@ -88,14 +97,14 @@ function Main({ dropdownItem }) {
       <div className="main">
         {!items && <p style={{ color: "red", fontSize: "4rem" }}>Pick some item from menu</p>}
         {sortedItems?.map((h, i) => (
-          <Item header={h.name} key={h.id} img={h.img} id={h.id} price={h.price} />
+          <Item amount={h.amount} header={h.name} key={h.id} img={h.img} id={h.id} price={h.price} />
         ))}
       </div>
     </main>
   );
 }
 
-function Item({ amount, setAmount, img, header, id, price }) {
+function Item({ amount, img, header, id, price }) {
   return (
     <div className="item">
       <h3>
@@ -104,15 +113,10 @@ function Item({ amount, setAmount, img, header, id, price }) {
       <img src={img} alt={header} />
       <h4>Enter amount:</h4>
       <div className="counterContainer">
-        <Button
-          onClick={() => {
-            setAmount(Number(amount + 1));
-          }}>
-          +
-        </Button>
+        <Button>+</Button>
         <input type="text" onChange={(e) => e.target.value} value={amount} id="1" name="counter" />
         {/* <span>{amount}</span> */}
-        <Button onClick={() => setAmount(Number(amount - 1))}>-</Button>
+        <Button>-</Button>
       </div>
       <h4>Price:</h4>
       <h3>$ {price}</h3>

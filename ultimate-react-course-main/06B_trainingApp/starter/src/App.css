@@ -121,11 +121,11 @@ body {
   grid-template-columns: 1fr 1fr;
   grid-template-rows: auto auto auto auto auto auto auto;
   place-items: center;
-  transition: 0.4s ease;
+  transition: 0.3s ease-in-out;
 }
 
 .item:hover {
-  scale: 1.05;
+  transform: scale(1.04);
 }
 
 .item h3 {
@@ -179,7 +179,7 @@ body {
 
 button {
   background-color: #fff;
-  border-radius: 0.4rem;
+  border-radius: 0.2rem;
   border: 0.1rem solid #000;
   align-self: center;
   cursor: pointer;
