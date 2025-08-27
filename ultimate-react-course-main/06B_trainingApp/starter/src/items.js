@@ -1,4 +1,13 @@
 
+export const dropdownMenuItems = [
+	{name: "hats", value:"hats"},
+	{name: "bicycles", value:"bicy"},
+	{name: "shoes", value:"shoes"},
+	{name: "glasses", value:"glasses"},
+	{name: "hoodies", value:"hoodies"},
+	{name: "t-shirts", value:"tshirts"},
+]
+
 export const hats = [
 	{amount: 1, name: "Beanie",id: "b2",price: 12,	img: "/Assets/beanie.svg", instock: false,},
 	{amount: 1, name: "Beanie",id: "b1",price: 11, img: "/Assets/beanie.svg",  instock: true},
@@ -46,7 +55,7 @@ export const hoodies = [
 
 export const tshirts = [
 	{amount: 1, name: "T-Shirt",id: "t2",price: 12,img: "/Assets/t-shirt.svg",  instock: false},
-	{amount: 1, name: "T-Shirt", id: "t1",price: 11,img: "/Assets/t-shirt.svg",  instock: true},
+	{amount: 1, name: "T-Shirt",id: "t1",price: 11,img: "/Assets/t-shirt.svg",  instock: true},
 	{amount: 1, name: "T-Shirt",id: "t4",price: 14,img: "/Assets/t-shirt.svg",  instock: false},
 	{amount: 1, name: "T-Shirt",id: "t3",price: 13,img: "/Assets/t-shirt.svg",  instock: false},
 	{amount: 1, name: "T-Shirt",id: "t6",price: 16,img: "/Assets/t-shirt.svg",  instock: true},

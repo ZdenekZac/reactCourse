@@ -1,25 +1,19 @@
 import { useState } from "react";
 import "./App.css";
-import { hats, bicycles, glasses, shoes, hoodies, tshirts } from "./items.js";
-
-
-const dropdownMenuItems = [
-	{name: "hats", value:"hats"},
-	{name: "bicycles", value:"bicy"},
-	{name: "shoes", value:"shoes"},
-	{name: "glasses", value:"glasses"},
-	{name: "hoodies", value:"hoodies"},
-	{name: "t-shirts", value:"tshirts"},
-]
-
+import {dropdownMenuItems, hats, bicycles, glasses, shoes, hoodies, tshirts } from "./items.js";
 
 export default function App() {
-	const [dropdownItem, setDropdownItem] = useState("");
 	const [sortBy, setSortBy] = useState("");
+	const [items, setItems] = useState();
 
-	function handleSetDropdown(value){
-		setDropdownItem(value)
-		handleSetSortBy("-")
+	function handleSetDropdown(val){
+		setItems(
+			val === "hats"     ? hats : val === "bicy"     ? bicycles :
+			val === "shoes"    ? shoes : val === "glasses"  ? glasses :
+			val === "hoodies"  ? hoodies : val === "tshirts"  ? tshirts :
+			[]
+		);
+			handleSetSortBy("-")
 	}
 
 	function handleSetSortBy(val){
@@ -28,8 +22,8 @@ export default function App() {
 
   return (
     <div className="app">
-      <Menu onSetDropdown={handleSetDropdown}/>
-      <Main  dropdownItem={dropdownItem} sortBy={sortBy} onSortBy={handleSetSortBy}/>
+      <Menu onSetDropdown={handleSetDropdown} />
+      <Main  items={items} sortBy={sortBy} onSortBy={handleSetSortBy}/>
       <Aside />
 	  
     </div>
@@ -39,7 +33,7 @@ export default function App() {
 function Menu({onSetDropdown}) {
   return (
     <div className="menu">
-      <Dropdown  onSetDropdown={onSetDropdown}/>
+      <Dropdown  onSetDropdown={onSetDropdown} />
 	  <img src="/Assets/shopping-cart.svg" alt="shopping_cart" />
       <span className="span-menu">3</span>
     </div>
@@ -59,16 +53,7 @@ function Dropdown({onSetDropdown}){
 	)
 }
 
-function Main({dropdownItem, onSortBy, sortBy}) {
-
-	let items;
-	
-	if(dropdownItem === "hats") items = hats;
-	else if(dropdownItem === "bicy") items = bicycles;
-	else if(dropdownItem === "shoes") items = shoes;
-	else if(dropdownItem === "glasses") items = glasses;
-	else if(dropdownItem === "hoodies") items = hoodies;
-	else if(dropdownItem === "tshirts") items = tshirts;
+function Main({onSortBy, items, sortBy}) {
 
 	let sortedItems;
 
@@ -78,9 +63,11 @@ function Main({dropdownItem, onSortBy, sortBy}) {
 	sortBy === "sold" ? items.slice().filter((it)=> it.instock) :
 	items;
 
-  return <main>
+console.log(sortedItems);
 
-	{items &&	<div className="filter">
+  return <main>
+	{items &&	
+	<div className="filter">
 		<label><img src="./Assets/filter.svg"/></label>
 		{/* <p>Filter price by: </p> */}
 		<select value={sortBy} onChange={(e)=> onSortBy(e.target.value)}>
@@ -93,9 +80,9 @@ function Main({dropdownItem, onSortBy, sortBy}) {
 
 	<div className="main">
 	{!items && <p style={{color: "red", fontSize: "4rem"}}>Pick some item from menu</p>}
-	{ sortedItems?.map((h,i)=> 
+	 { sortedItems?.map((h,i)=> 
 		<Item amount={h.amount} header={h.name} key={h.id} img={h.img} id={h.id} price={h.price}/>
-	)} 
+	)}  
 	</div>
   </main>;
 }
@@ -110,7 +97,7 @@ function Item({amount,img, header, id, price }){
 				<Button >+</Button>
 				<input type="text" onChange={(e)=> e.target.value} value={amount} id="1" name="counter"/>
 				{/* <span>{amount}</span> */}
-				<Button >-</Button>
+				<Button>-</Button>
 		</div>
 		<h4>Price:</h4>
 		<h3>$ {price}</h3>
