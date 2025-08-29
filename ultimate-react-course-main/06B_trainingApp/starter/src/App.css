@@ -109,6 +109,10 @@ body {
   gap: 2rem;
 }
 
+.selected {
+  background-color: red;
+}
+
 .filter {
   display: flex;
   padding: 1rem;
@@ -126,6 +130,7 @@ body {
 
 .item:hover {
   transform: scale(1.04);
+  box-shadow: 5px 5px 7px 1px #cecccc;
 }
 
 .item h3 {
