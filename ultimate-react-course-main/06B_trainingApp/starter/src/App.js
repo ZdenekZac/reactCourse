@@ -5,10 +5,15 @@ import {dropdownMenuItems, hats, bicycles, glasses, shoes, hoodies, tshirts } fr
 export default function App() {
 	const [sortBy, setSortBy] = useState("");
 	const [items, setItems] = useState();
-	const [amount, setAmount] = useState();
+	const [asideItems, setAsideItems] = useState([]);
 
-	function handleSetAmount(){
-		setAmount()
+	let sortedItems;
+
+	function handleAddItem(item, amt)
+	{
+		setAsideItems((itms) => [...itms, item]);
+				setAsideItems((items) => items.map((it) => ({...it, amount: it.amount + amt}));	
+
 	}
 
 	function handleSetDropdown(val){
@@ -28,10 +33,9 @@ export default function App() {
   return (
     <div className="app">
       <Menu onSetDropdown={handleSetDropdown} />
-      <Main items={items} sortBy={sortBy} 
-	  onSortBy={handleSetSortBy} amount={amount} 
-	  onSetAmount={handleSetAmount}/>
-      <Aside />
+      <Main items={items} sortBy={sortBy} onAddItem={handleAddItem}
+	  onSortBy={handleSetSortBy} sortedItems={sortedItems}/>
+      <Aside asideItems={asideItems}/>
 	  
     </div>
   );
@@ -39,17 +43,8 @@ export default function App() {
 
 
 
-function Main({onSortBy, items, sortBy}) {
+function Main({onSortBy, items, sortBy, sortedItems, onAddItem}) {
 	const [selected, setSelected] = useState("");
-	const [orderItems, setOrderItems] = useState(items)
-	let sortedItems;
-
-	// function handleOrderItems(){   
-	// 	setOrderItems((items) =>
-	// 		items.map((itm)=>
-	// 			itm.id === selected ? {...itm, amount: itm.amount + 1} : itm
-	// 		)
-	// 	)
 
 	function handleSetSelected(id){
 		setSelected(id)
@@ -65,7 +60,6 @@ function Main({onSortBy, items, sortBy}) {
 	{items &&	
 	<div className="filter">
 		<label><img src="./Assets/filter.svg"/></label>
-		{/* <p>Filter price by: </p> */}
 		<select value={sortBy} onChange={(e)=> onSortBy(e.target.value)}>
 			<option>No filter</option>
 			<option value={"highest"}>By highest</option>
@@ -77,13 +71,16 @@ function Main({onSortBy, items, sortBy}) {
 	<div className="main">
 	{!items && <p style={{color: "red", fontSize: "4rem"}}>Pick some item from menu</p>}
 	 { sortedItems?.map((h,i)=> 
-		<Item orderItems={orderItems} onSelected={handleSetSelected} selected={selected} amount={h.amount} header={h.name} key={h.id} img={h.img} id={h.id} price={h.price}/>
+		<Item onSelected={handleSetSelected} onAddItem={onAddItem}
+				selected={selected} header={h.name} key={h.id} img={h.img} 
+				id={h.id} price={h.price} h={h} />
 	)}  
 	</div>
   </main>;
 }
 
-function Item({orderItems, amount, img, header, id, price, onSelected, selected }){
+function Item({img, header, id, price, onSelected, selected, onAddItem, h}){
+		const [amt, setAmt] = useState(0);
 	return (
 		<div value={id} className={`item ${selected === id ? "selected" : ""}`} onClick={()=> onSelected(id)
 		}>
@@ -91,16 +88,30 @@ function Item({orderItems, amount, img, header, id, price, onSelected, selected 
         	<img src={img} alt={header} />
 			<h4>Enter amount:</h4>
 			<div className="counterContainer">
-				<Button onClick={()=> id === selected ? amount + 1 : ""}>+</Button>
-				<input type="text" onChange={(e)=> e.target.value} value={amount}/>
-				{/* <span>{amount}</span> */}
-				<Button>-</Button>
+				<Button onClick={()=> setAmt(Number(amt + 1))}>+</Button>
+				<input type="text" onChange={(e)=> e.target.value} value={amt}/>
+				<Button onClick={()=> setAmt(Number(amt > 0 ? amt - 1 : amt))}>-</Button>
 		</div>
 		<h4>Price:</h4>
 		<h3>$ {price}</h3>
-		<Button>Add to Cart</Button>
+		<Button onClick={()=> onAddItem(h, amt)}>Add to Cart</Button>
 	</div>
 	)
+}
+function Aside({asideItems}) {
+  return <ul className="aside">
+	{asideItems?.map(item => 
+		<li key={item.id}>
+			<div>
+			<p>{item.name} {item.id}</p>
+			<p>{item.price}</p>
+			<p>{item.name}</p>
+
+			</div>
+		</li>
+	)}
+	<p>Total price: </p>
+	  </ul>
 }
 
 function Menu({onSetDropdown}) {
@@ -113,6 +124,7 @@ function Menu({onSetDropdown}) {
   );
 }
 
+
 function Dropdown({onSetDropdown}){
 	return (
 		<div className="dropdown">
@@ -124,10 +136,6 @@ function Dropdown({onSetDropdown}){
 			</ul>
 		</div>
 	)
-}
-
-function Aside() {
-  return <aside>Aside</aside>;
 }
 
 function Button({children, onClick}){

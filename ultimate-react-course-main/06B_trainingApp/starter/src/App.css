@@ -27,7 +27,7 @@ body {
 .app > main {
   grid-area: b;
 }
-.app > aside {
+.app > .aside {
   grid-area: c;
 }
 
@@ -188,4 +188,14 @@ button{
 	border: 0.1rem solid #000;
 	align-self: center;
 	cursor: pointer;
+}
+
+.aside{
+	list-style: none;
+	border: 1px solid #000;
+	margin: 0;
+}
+
+.aside div{
+	border: 1px solid #000;
 }
