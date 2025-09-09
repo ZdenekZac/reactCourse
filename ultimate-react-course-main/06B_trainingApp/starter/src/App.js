@@ -5,10 +5,18 @@ import { dropdownMenuItems, hats, bicycles, glasses, shoes, hoodies, tshirts } f
 export default function App() {
   const [sortBy, setSortBy] = useState("");
   const [items, setItems] = useState();
-  const [amount, setAmount] = useState();
+  const [selected, setSelected] = useState("");
+  const [asideItems, setAsideItems] = useState([]);
+  let sortedItems;
 
-  function handleSetAmount() {
-    setAmount();
+  function handleAddItem(item, amt) {
+    const itm = { ...item, amount: +amt };
+    setAsideItems((items) => [...items, itm]);
+    console.log(itm);
+  }
+
+  function handleSetSelected(id) {
+    setSelected(id);
   }
 
   function handleSetDropdown(val) {
@@ -37,28 +45,21 @@ export default function App() {
   return (
     <div className="app">
       <Menu onSetDropdown={handleSetDropdown} />
-      <Main items={items} sortBy={sortBy} onSortBy={handleSetSortBy} amount={amount} onSetAmount={handleSetAmount} />
-      <Aside />
+      <Main
+        items={items}
+        selected={selected}
+        sortBy={sortBy}
+        onSortBy={handleSetSortBy}
+        onSelected={handleSetSelected}
+        onAddItem={handleAddItem}
+        sortedItems={sortedItems}
+      />
+      <Aside asideItems={asideItems} />
     </div>
   );
 }
 
-function Main({ onSortBy, items, sortBy }) {
-  const [selected, setSelected] = useState("");
-  const [orderItems, setOrderItems] = useState(items);
-  let sortedItems;
-
-  // function handleOrderItems(){
-  // 	setOrderItems((items) =>
-  // 		items.map((itm)=>
-  // 			itm.id === selected ? {...itm, amount: itm.amount + 1} : itm
-  // 		)
-  // 	)
-
-  function handleSetSelected(id) {
-    setSelected(id);
-  }
-
+function Main({ onSortBy, items, sortBy, sortedItems, onSelected, selected, onAddItem }) {
   sortedItems =
     sortBy === "highest"
       ? items.slice().sort((a, b) => b.price - a.price)
@@ -73,9 +74,8 @@ function Main({ onSortBy, items, sortBy }) {
       {items && (
         <div className="filter">
           <label>
-            <img src="./Assets/filter.svg" />
+            <img src="./Assets/filter.svg" alt="picture_of_filters" />
           </label>
-          {/* <p>Filter price by: </p> */}
           <select value={sortBy} onChange={(e) => onSortBy(e.target.value)}>
             <option>No filter</option>
             <option value={"highest"}>By highest</option>
@@ -89,15 +89,15 @@ function Main({ onSortBy, items, sortBy }) {
         {!items && <p style={{ color: "red", fontSize: "4rem" }}>Pick some item from menu</p>}
         {sortedItems?.map((h, i) => (
           <Item
-            orderItems={orderItems}
-            onSelected={handleSetSelected}
+            onSelected={onSelected}
+            onAddItem={onAddItem}
             selected={selected}
-            amount={h.amount}
             header={h.name}
             key={h.id}
             img={h.img}
             id={h.id}
             price={h.price}
+            h={h}
           />
         ))}
       </div>
@@ -105,23 +105,23 @@ function Main({ onSortBy, items, sortBy }) {
   );
 }
 
-function Item({ orderItems, amount, img, header, id, price, onSelected, selected }) {
+function Item({ img, header, id, price, onSelected, selected, onAddItem, h }) {
+  const [amt, setAmt] = useState(1);
   return (
-    <div value={id} className={`item ${selected === id ? "selected" : ""}`} onClick={() => onSelected(id)}>
+    <div className={`item ${selected === h.id ? "selected" : ""}`} onClick={() => onSelected(id)}>
       <h3>
         {header} {id}
       </h3>
       <img src={img} alt={header} />
       <h4>Enter amount:</h4>
       <div className="counterContainer">
-        <Button onClick={() => (id === selected ? amount + 1 : "")}>+</Button>
-        <input type="text" onChange={(e) => e.target.value} value={amount} />
-        {/* <span>{amount}</span> */}
-        <Button>-</Button>
+        <Button onClick={() => setAmt(Number(amt + 1))}>+</Button>
+        <input type="text" onChange={(e) => e.target.value} value={amt >= 0 ? amt : 0} />
+        <Button onClick={() => setAmt(Number(amt - 1))}>-</Button>
       </div>
       <h4>Price:</h4>
       <h3>$ {price}</h3>
-      <Button>Add to Cart</Button>
+      <Button onClick={() => onAddItem(h, amt)}>Add to Cart</Button>
     </div>
   );
 }
@@ -151,8 +151,30 @@ function Dropdown({ onSetDropdown }) {
   );
 }
 
-function Aside() {
-  return <aside>Aside</aside>;
+function AsideItem({ it }) {
+  return (
+    <li className="aside_item">
+      <h3>
+        {it.name} {it.id}
+      </h3>
+      <img src={it.img} alt={it.name} />
+      <p>Item price:</p>
+      <span>$ {it.price}</span>
+      <p>Amount:</p>
+      <span>{it.amount}</span>
+    </li>
+  );
+}
+
+function Aside({ asideItems }) {
+  return (
+    <ul className="aside">
+      {asideItems?.map((it) => (
+        <AsideItem it={it} key={it.id} />
+      ))}
+      <h2>Total price: ${}</h2>
+    </ul>
+  );
 }
 
 function Button({ children, onClick }) {
