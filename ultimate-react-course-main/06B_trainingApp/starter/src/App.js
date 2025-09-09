@@ -10,9 +10,32 @@ export default function App() {
   let sortedItems;
 
   function handleAddItem(item, amt) {
-    const itm = { ...item, amount: +amt };
-    setAsideItems((items) => [...items, itm]);
-    console.log(itm);
+	// let itm;
+	// let findSameId = asideItems.find(it => it.id === item.id)
+	// if (findSameId === undefined)
+	// 	{
+	// 		itm = { ...item, amount: +amt };
+	// 		setAsideItems((items) => [...items, itm]);
+	// 	} 
+	// else {
+	// 		findSameId = { ...findSameId, amount: +amt };
+	
+	// 	}
+	// console.log(findSameId);
+
+	  const delta = Number(amt) || 1;
+  const idx = asideItems.findIndex(it => it.id === item.id);
+
+  if (idx === -1) {
+    // nový item
+    setAsideItems([...asideItems, { ...item, amount: delta }]);
+  } else {
+    // navýšit amount jen u nalezeného
+    const next = [...asideItems];
+    next[idx] = { ...next[idx], amount: next[idx].amount + delta };
+    setAsideItems(next);
+  }
+	
   }
 
   function handleSetSelected(id) {
@@ -125,21 +148,8 @@ function Item({ img, header, id, price, onSelected, selected, onAddItem, h }) {
     </div>
   );
 }
-function Aside({asideItems}) {
-  return <ul className="aside">
-	{asideItems?.map(item => 
-		<li key={item.id}>
-			<div>
-			<p>{item.name} {item.id}</p>
-			<p>{item.price}</p>
-			<p>{item.name}</p>
 
-			</div>
-		</li>
-	)}
-	<p>Total price: </p>
-	  </ul>
-}
+
 
 function Menu({ onSetDropdown }) {
   return (
@@ -166,26 +176,19 @@ function Dropdown({ onSetDropdown }) {
   );
 }
 
-function AsideItem({ it }) {
-  return (
-    <li className="aside_item">
-      <h3>
-        {it.name} {it.id}
-      </h3>
-      <img src={it.img} alt={it.name} />
-      <p>Item price:</p>
-      <span>$ {it.price}</span>
-      <p>Amount:</p>
-      <span>{it.amount}</span>
-    </li>
-  );
-}
 
-function Aside({ asideItems }) {
+function Aside({ asideItems, it }) {
   return (
     <ul className="aside">
       {asideItems?.map((it) => (
-        <AsideItem it={it} key={it.id} />
+		<li className="aside_item" key={it.id}>
+      		<h3>{it.name} {it.id}</h3>
+      		<img src={it.img} alt={it.name} />
+      		<p>Item price:</p>
+      		<span>$ {it.price}</span>
+      		<p>Amount:</p>
+      		<span>{it.amount}</span>
+    	</li>
       ))}
       <h2>Total price: ${}</h2>
     </ul>
