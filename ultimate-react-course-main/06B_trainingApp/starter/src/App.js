@@ -7,35 +7,30 @@ export default function App() {
   const [items, setItems] = useState();
   const [selected, setSelected] = useState("");
   const [asideItems, setAsideItems] = useState([]);
+  const [totalPrice, setTotalPrice] = useState(0);
   let sortedItems;
 
+
+
   function handleAddItem(item, amt) {
-	// let itm;
-	// let findSameId = asideItems.find(it => it.id === item.id)
-	// if (findSameId === undefined)
-	// 	{
-	// 		itm = { ...item, amount: +amt };
-	// 		setAsideItems((items) => [...items, itm]);
-	// 	} 
-	// else {
-	// 		findSameId = { ...findSameId, amount: +amt };
-	
-	// 	}
-	// console.log(findSameId);
-
-	  const delta = Number(amt) || 1;
-  const idx = asideItems.findIndex(it => it.id === item.id);
-
-  if (idx === -1) {
-    // nový item
-    setAsideItems([...asideItems, { ...item, amount: delta }]);
-  } else {
-    // navýšit amount jen u nalezeného
-    const next = [...asideItems];
-    next[idx] = { ...next[idx], amount: next[idx].amount + delta };
-    setAsideItems(next);
+	let itm;
+	let findSameId = asideItems.find(it => it.id === item.id)
+	if (findSameId === undefined)
+		{
+			itm = { ...item, amount: +amt };
+			setAsideItems((items) => [...items, itm]);
+		} 
+	else {
+		const idx = asideItems.findIndex(it => it.id === item.id)
+		asideItems[idx] = {...asideItems[idx], amount: asideItems[idx].amount + amt}	
+		setAsideItems([...asideItems]);
+		}	
+		console.log(asideItems);
+		
   }
-	
+
+  function handleDeleteItem(id){
+	setAsideItems((items)=> items.filter((item)=> item.id !== id))	
   }
 
   function handleSetSelected(id) {
@@ -77,7 +72,7 @@ export default function App() {
         onAddItem={handleAddItem}
         sortedItems={sortedItems}
       />
-      <Aside asideItems={asideItems} />
+      <Aside asideItems={asideItems} onDeleteItem={handleDeleteItem}/>
     </div>
   );
 }
@@ -132,7 +127,8 @@ function Item({ img, header, id, price, onSelected, selected, onAddItem, h }) {
   const [amt, setAmt] = useState(1);
   return (
     <div className={`item ${selected === h.id ? "selected" : ""}`} onClick={() => onSelected(id)}>
-      <h3>
+
+	  <h3>
         {header} {id}
       </h3>
       <img src={img} alt={header} />
@@ -144,7 +140,7 @@ function Item({ img, header, id, price, onSelected, selected, onAddItem, h }) {
       </div>
       <h4>Price:</h4>
       <h3>$ {price}</h3>
-      <Button onClick={() => onAddItem(h, amt)}>Add to Cart</Button>
+      <Button onClick={() => {onAddItem(h, amt); setAmt(1);}}>Add to Cart</Button>
     </div>
   );
 }
@@ -176,12 +172,21 @@ function Dropdown({ onSetDropdown }) {
   );
 }
 
+function Aside({ asideItems, onDeleteItem }) {
 
-function Aside({ asideItems, it }) {
+	const totalPrice = asideItems?.reduce(
+		(acc, cur) => acc + (cur.amount * cur.price), 0
+	)	
+
   return (
-    <ul className="aside">
+	<div className="aside">
+	<h2>Your order: </h2>
+    <ul className="listOfOrderItems">
       {asideItems?.map((it) => (
-		<li className="aside_item" key={it.id}>
+		  <li className="aside_item" key={it.id}>
+			<Button className="close" onClick={()=> onDeleteItem(it.id)}>
+				<img className="btn_close" src="./Assets/trash.svg" alt="trash" />
+			</Button>
       		<h3>{it.name} {it.id}</h3>
       		<img src={it.img} alt={it.name} />
       		<p>Item price:</p>
@@ -190,11 +195,13 @@ function Aside({ asideItems, it }) {
       		<span>{it.amount}</span>
     	</li>
       ))}
-      <h2>Total price: ${}</h2>
     </ul>
+      <h2>Total price: ${totalPrice}</h2>
+	</div>
+	  
   );
 }
 
-function Button({ children, onClick }) {
-  return <button onClick={onClick}>{children}</button>;
+function Button({ children, onClick, className="", }) {
+  return <button className={className} onClick={onClick}>{children}</button>;
 }
