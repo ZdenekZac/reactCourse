@@ -7,18 +7,25 @@ export default function App() {
   const [items, setItems] = useState();
   const [selected, setSelected] = useState("");
   const [asideItems, setAsideItems] = useState([]);
+  const [totalPrice, setTotalPrice] = useState(0);
   let sortedItems;
 
   function handleAddItem(item, amt) {
+    let itm;
     let findSameId = asideItems.find((it) => it.id === item.id);
     if (findSameId === undefined) {
-      //   itm = { ...item, amount: +amt };
-      setAsideItems((items) => [...items, item]);
+      itm = { ...item, amount: +amt };
+      setAsideItems((items) => [...items, itm]);
     } else {
       const idx = asideItems.findIndex((it) => it.id === item.id);
       asideItems[idx] = { ...asideItems[idx], amount: asideItems[idx].amount + amt };
       setAsideItems([...asideItems]);
     }
+    console.log(asideItems);
+  }
+
+  function handleDeleteItem(id) {
+    setAsideItems((items) => items.filter((item) => item.id !== id));
   }
 
   function handleSetSelected(id) {
@@ -60,7 +67,7 @@ export default function App() {
         onAddItem={handleAddItem}
         sortedItems={sortedItems}
       />
-      <Aside asideItems={asideItems} />
+      <Aside asideItems={asideItems} onDeleteItem={handleDeleteItem} />
     </div>
   );
 }
@@ -163,26 +170,38 @@ function Dropdown({ onSetDropdown }) {
   );
 }
 
-function Aside({ asideItems, it }) {
+function Aside({ asideItems, onDeleteItem }) {
+  const totalPrice = asideItems?.reduce((acc, cur) => acc + cur.amount * cur.price, 0);
+
   return (
-    <ul className="aside">
-      {asideItems?.map((it) => (
-        <li className="aside_item" key={it.id}>
-          <h3>
-            {it.name} {it.id}
-          </h3>
-          <img src={it.img} alt={it.name} />
-          <p>Item price:</p>
-          <span>$ {it.price}</span>
-          <p>Amount:</p>
-          <span>{it.amount}</span>
-        </li>
-      ))}
-      <h2>Total price: ${}</h2>
-    </ul>
+    <div className="aside">
+      <h2>Your order: </h2>
+      <ul className="listOfOrderItems">
+        {asideItems?.map((it) => (
+          <li className="aside_item" key={it.id}>
+            <Button className="close" onClick={() => onDeleteItem(it.id)}>
+              <img className="btn_close" src="./Assets/trash.svg" alt="trash" />
+            </Button>
+            <h3>
+              {it.name} {it.id}
+            </h3>
+            <img src={it.img} alt={it.name} />
+            <p>Item price:</p>
+            <span>$ {it.price}</span>
+            <p>Amount:</p>
+            <span>{it.amount}</span>
+          </li>
+        ))}
+      </ul>
+      <h2>Total price: ${totalPrice}</h2>
+    </div>
   );
 }
 
-function Button({ children, onClick }) {
-  return <button onClick={onClick}>{children}</button>;
+function Button({ children, onClick, className = "" }) {
+  return (
+    <button className={className} onClick={onClick}>
+      {children}
+    </button>
+  );
 }

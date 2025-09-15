@@ -9,9 +9,9 @@ body {
 .app {
   margin: 0 auto;
   display: grid;
-  height: 90vh;
-  width: 90%;
-  max-width: 400rem;
+  height: 60vh;
+  width: 100%;
+  max-width: 100rem;
   grid-template-columns: 3fr 1fr; /* 3/4 a 1/4 */
   grid-template-rows: auto 1fr; /* menu podle obsahu, zbytek vyplnit */
   grid-template-areas:
@@ -108,6 +108,7 @@ body {
   display: grid;
   grid-template-columns: auto auto auto;
   gap: 2rem;
+  font-size: 1.4rem;
 }
 
 .selected {
@@ -124,9 +125,13 @@ body {
   height: 24rem;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: auto auto auto auto auto auto auto;
+  grid-template-rows: auto auto auto auto auto;
   place-items: center;
   transition: 0.3s ease-in-out;
+}
+
+.item input{
+	height: 2rem;
 }
 
 .item:hover {
@@ -146,8 +151,18 @@ body {
   height: 8rem;
 }
 
+.item > button:last-of-type {
+	height: 2.4rem;
+}
+
+.counterContainer button {
+	height: 2.4rem;
+	width: 2.4rem;
+}
+
 .counterContainer {
   display: flex;
+  align-items: center;
   flex-direction: row;
   grid-column: 1/2;
   height: 2rem;
@@ -193,15 +208,6 @@ button {
 
 /* ASIDE ITEMS LIST */
 
-.aside {
-  padding: 1rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: start;
-  overflow: scroll;
-  list-style: none;
-  margin: 0;
-}
 
 .aside_item {
   border: 1px solid #000;
@@ -210,19 +216,48 @@ button {
   grid-template-columns: 1fr 1fr;
   grid-template-rows: auto auto auto;
   align-items: center;
-  justify-items: center;
+  justify-items: start;
+	position: relative;
 }
 
 .aside_item * {
   margin: 0.4rem;
+
+}
+.aside_item button {
+	border: none;
+	margin: 0;
+	padding: 0;
+}
+
+.aside_item > button > img {
+	height: 2rem;
 }
 
 .aside{
-	list-style: none;
-	border: 1px solid #000;
-	margin: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr auto;
+    border: 1px solid #000;
+    margin: 0;
+	padding: 0 1.2rem;
+    font-size: 1.2rem;
 }
 
-.aside div{
-	border: 1px solid #000;
+.aside li{
+	height: 9rem;
+}
+
+.listOfOrderItems{
+	display: flex;
+    flex-direction: column;
+    padding: 0;
+    overflow: scroll;
+    max-height: 45rem;
+}
+
+.close{
+	position: absolute;
+	top: 0;
+	right: 0;
 }
