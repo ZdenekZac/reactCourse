@@ -29,8 +29,10 @@ export default function Challenge() {
   );
 }
 
-function TextExpander({ children }) {
+function TextExpander({ children, collapsedNumWords }) {
   console.log(children.length);
+
   const [textLength, setTextLength] = useState();
-  return <p>{children}</p>;
+
+  return <p onClick={() => console.log(collapsedNumWords)}>{children}</p>;
 }
