@@ -7,10 +7,14 @@ import Challenge from "./Challenge";
 
 function Test() {
   const [movieRating, setMovieRating] = useState(0);
+  const test = "a b c d e f g h";
+  console.log(test.split(" ", 3));
+  const test2 = test.split(" ", 3).join(" ");
   return (
     <div>
-      <StarRating color="blue" maxRating={10} onSetRating={setMovieRating} />
+      <StarRating color="blue" maxRating={6} onSetRating={setMovieRating} />
       <p>This movie was rated {movieRating} stars</p>
+	  <p>{test2}</p>
     </div>
   );
 }
