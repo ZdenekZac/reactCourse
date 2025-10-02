@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const tempMovieData = [
   {
@@ -47,28 +47,118 @@ const tempWatchedData = [
 
 const average = (arr) => arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
 
+const KEY = "6173a955";
+
 export default function App() {
-  const [movies, setMovies] = useState(tempMovieData);
-  const [watched, setWatched] = useState(tempWatchedData);
+  const [movies, setMovies] = useState([]);
+  const [query, setQuery] = useState("");
+  const [watched, setWatched] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
+  const tempQuery = "Interstellar";
+  const [selectedId, setSelectedId] = useState(null);
+
+  //   useEffect(function () {
+  //     fetch(`https://www.omdbapi.com/?s=Interstellar&apikey=${KEY}`)
+  //       .then((res) => res.json())
+  //       .then((data) => setMovies(data.Search));
+  //   }, []);
+
+  //   useEffect(function () {
+  //     console.log("A");
+  //   }, []);
+  //   useEffect(
+  //     function () {
+  //       console.log("B");
+  //     },
+  //     [query]
+  //   );
+  //   useEffect(function () {
+  //     console.log("C");
+  //   });
+
+  //   console.log("D");
+
+  function handleSelectMovie(id) {
+    setSelectedId((selectedId) => (id === selectedId ? null : id));
+  }
+
+  function handleCloseMovie() {
+    setSelectedId(null);
+  }
+
+  useEffect(
+    function () {
+      async function fetchMovies() {
+        try {
+          setIsLoading(true);
+          setError("");
+
+          const res = await fetch(`https://www.omdbapi.com/?s=${query}&apikey=${KEY}`);
+
+          if (!res) throw new Error("something went wrong with fetch");
+
+          const data = await res.json();
+          console.log(data);
+          if (data.Response === "False") throw new Error("movie not found");
+
+          setMovies(data.Search);
+          console.log(data.Search);
+        } catch (err) {
+          console.error(err);
+          setError(err.message);
+        } finally {
+          setIsLoading(false);
+        }
+      }
+      if (query.length < 3) {
+        setMovies([]);
+        setError("");
+        return;
+      }
+      fetchMovies();
+    },
+    [query]
+  );
 
   return (
     <>
       <NavBar>
-        <Search />
+        <Search query={query} setQuery={setQuery} />
         <NumResults movies={movies} />
       </NavBar>
       <Main>
         <Box>
-          <MovieList movies={movies} />
+          {isLoading && <Loader />}
+          {!isLoading && !error && <MovieList movies={movies} onSelectMovie={handleSelectMovie} />}
+          {error && <ErrorMessage message={error} />}
         </Box>
+
         <Box>
-          <>
-            <WatchedSummary watched={watched} />
-            <WatchedMoviesList watched={watched} />
-          </>
+          {selectedId ? (
+            <MovieDetails selectedId={selectedId} onSelectMovie={handleCloseMovie} onCloseMovie={handleCloseMovie} />
+          ) : (
+            <>
+              <WatchedSummary watched={watched} />
+              <WatchedMoviesList watched={watched} />
+            </>
+          )}
         </Box>
       </Main>
     </>
+  );
+}
+
+function Loader() {
+  return <p className="loader">Loading...</p>;
+}
+
+function ErrorMessage({ message }) {
+  return (
+    <p className="error">
+      <span>⛔️</span>
+      {message}
+    </p>
   );
 }
 
@@ -108,8 +198,7 @@ function Main({ children }) {
   return <main className="main">{children}</main>;
 }
 
-function Search() {
-  const [query, setQuery] = useState("");
+function Search({ query, setQuery }) {
   return (
     <input
       className="search"
@@ -147,19 +236,19 @@ function NumResults({ movies }) {
   );
 }
 
-function MovieList({ movies }) {
+function MovieList({ movies, onSelectMovie }) {
   return (
-    <ul className="list">
+    <ul className="list list-movies">
       {movies?.map((movie) => (
-        <Movie movie={movie} key={movie.imdbID} />
+        <Movie movie={movie} key={movie.imdbID} onSelectMovie={onSelectMovie} />
       ))}
     </ul>
   );
 }
 
-function Movie({ movie }) {
+function Movie({ movie, onSelectMovie }) {
   return (
-    <li>
+    <li onClick={() => onSelectMovie(movie.imdbID)}>
       <img src={movie.Poster} alt={`${movie.Title} poster`} />
       <h3>{movie.Title}</h3>
       <div>
@@ -169,6 +258,17 @@ function Movie({ movie }) {
         </p>
       </div>
     </li>
+  );
+}
+
+function MovieDetails({ selectedId, onCloseMovie }) {
+  return (
+    <div className="details">
+      <button className="btn-back" onClick={() => onCloseMovie()}>
+        &larr;
+      </button>
+      {selectedId}
+    </div>
   );
 }
 
