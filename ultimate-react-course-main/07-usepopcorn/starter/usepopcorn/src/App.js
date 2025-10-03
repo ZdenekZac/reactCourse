@@ -51,89 +51,99 @@ const KEY = "50b28e9c";
 
 export default function App() {
   const [movies, setMovies] = useState([]);
-	const [query, setQuery] = useState("");
+  const [query, setQuery] = useState("");
   const [watched, setWatched] = useState([]);
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
-  const tempQuery = "interstellar";
+  const tempQuery = "Interstellar";
+  const [selectedId, setSelectedId] = useState(null);
 
-// useEffect(function(){
-// 			fetch(`https://www.omdbapi.com/?s=interstellar&apikey=${KEY}`)
-// 			.then(res=> res.json())
-// 			.then(data=> setMovies(data.Search));
-// 	},[]
-// )
+  //   useEffect(function () {
+  //     fetch(`https://www.omdbapi.com/?s=Interstellar&apikey=${KEY}`)
+  //       .then((res) => res.json())
+  //       .then((data) => setMovies(data.Search));
+  //   }, []);
 
-// useEffect(function(){
-// 	console.log('after initial render');
-	
-// }, [])
+  //   useEffect(function () {
+  //     console.log("A");
+  //   }, []);
+  //   useEffect(
+  //     function () {
+  //       console.log("B");
+  //     },
+  //     [query]
+  //   );
+  //   useEffect(function () {
+  //     console.log("C");
+  //   });
 
-// useEffect(function(){
-// 	console.log('after every render');
-	
-// })
+  //   console.log("D");
 
-// useEffect(function(){
-// 	console.log('D');
-	
-// }, [query])
+  function handleSelectMovie(id) {
+    setSelectedId((selectedId) => (id === selectedId ? null : id));
+  }
 
-useEffect(function(){
-	async function fetchMovies(){
-		try {
-			setIsLoading(true);
-			setError("")
-			
-			const res = await fetch(`https://www.omdbapi.com/?s=${query}&apikey=${KEY}`);
-			
-			if(!res.ok) throw new Error("Something went wrong :(( ")
-			
-			const data = await res.json();
+  function handleCloseMovie() {
+    setSelectedId(null);
+  }
 
-			if(data.Response === "False") throw new Error("movie not found :(( ")
-			
-			setMovies(data.Search)
-			console.log(data.Response);
-			
-			setIsLoading(false);
-		} catch (err){
-			console.error(err.message);
-			setError(err.message);
-		} finally {
-			setIsLoading(false);
-		}
-	}
-	fetchMovies();
+  useEffect(
+    function () {
+      async function fetchMovies() {
+        try {
+          setIsLoading(true);
+          setError("");
 
-	if(!query.length < 3){
-		setMovies([]);
-		setError("")
-		return;
-	}
+          const res = await fetch(`https://www.omdbapi.com/?s=${query}&apikey=${KEY}`);
 
-}, 
-[query]
-);
+          if (!res) throw new Error("something went wrong with fetch");
+
+          const data = await res.json();
+          console.log(data);
+          if (data.Response === "False") throw new Error("movie not found");
+
+          setMovies(data.Search);
+          console.log(data.Search);
+        } catch (err) {
+          console.error(err);
+          setError(err.message);
+        } finally {
+          setIsLoading(false);
+        }
+      }
+      if (query.length < 3) {
+        setMovies([]);
+        setError("");
+        return;
+      }
+      fetchMovies();
+    },
+    [query]
+  );
 
   return (
     <>
       <NavBar>
-        <Search query={query} setQuery={setQuery}/>
+        <Search query={query} setQuery={setQuery} />
         <NumResults movies={movies} />
       </NavBar>
       <Main>
         <Box>
           {/* {isLoading ? <Loader/> :  <MovieList movies={movies} />} */}
-		  {isLoading && <Loader/>}
-		  {!isLoading && !error && <MovieList movies={movies}/>}
-		  {error && <ErrorMessage message={error}/>}
+          {isLoading && <Loader />}
+          {!isLoading && !error && <MovieList movies={movies} onSelectMovie={handleSelectMovie} />}
+          {error && <ErrorMessage message={error} />}
         </Box>
+
         <Box>
-          <>
-            <WatchedSummary watched={watched} />
-            <WatchedMoviesList watched={watched} />
-          </>
+          {selectedId ? (
+            <MovieDetails selectedId={selectedId} onSelectMovie={handleCloseMovie} onCloseMovie={handleCloseMovie} />
+          ) : (
+            <>
+              <WatchedSummary watched={watched} />
+              <WatchedMoviesList watched={watched} />
+            </>
+          )}
         </Box>
       </Main>
     </>
@@ -144,10 +154,14 @@ function Loader(){
 	return <p className="loader">Loading...</p>
 }
 
-function ErrorMessage({message}){
-	return <p className="error">
-		<span>⛔</span>{message}
-	</p>
+
+function ErrorMessage({ message }) {
+  return (
+    <p className="error">
+      <span>⛔️</span>
+      {message}
+    </p>
+  );
 }
 
 function Box({ children }) {
@@ -186,8 +200,7 @@ function Main({ children }) {
   return <main className="main">{children}</main>;
 }
 
-function Search({query, setQuery}) {
-
+function Search({ query, setQuery }) {
   return (
     <input
       className="search"
@@ -217,6 +230,7 @@ function Logo() {
     </div>
   );
 }
+
 function NumResults({ movies }) {
   return (
     <p className="num-results">
@@ -225,19 +239,19 @@ function NumResults({ movies }) {
   );
 }
 
-function MovieList({ movies }) {
+function MovieList({ movies, onSelectMovie }) {
   return (
-    <ul className="list">
+    <ul className="list list-movies">
       {movies?.map((movie) => (
-        <Movie movie={movie} key={movie.imdbID} />
+        <Movie movie={movie} key={movie.imdbID} onSelectMovie={onSelectMovie} />
       ))}
     </ul>
   );
 }
 
-function Movie({ movie }) {
+function Movie({ movie, onSelectMovie }) {
   return (
-    <li>
+    <li onClick={() => onSelectMovie(movie.imdbID)}>
       <img src={movie.Poster} alt={`${movie.Title} poster`} />
       <h3>{movie.Title}</h3>
       <div>
@@ -247,6 +261,17 @@ function Movie({ movie }) {
         </p>
       </div>
     </li>
+  );
+}
+
+function MovieDetails({ selectedId, onCloseMovie }) {
+  return (
+    <div className="details">
+      <button className="btn-back" onClick={() => onCloseMovie()}>
+        &larr;
+      </button>
+      {selectedId}
+    </div>
   );
 }
 

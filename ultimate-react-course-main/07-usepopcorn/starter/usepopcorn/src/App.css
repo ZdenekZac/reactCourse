@@ -1,0 +1,6 @@
+body {
+  scrollbar-width: none; /* Firefox */
+}
+body::-webkit-scrollbar { /* Chrome, Edge */
+  display: none;
+}
