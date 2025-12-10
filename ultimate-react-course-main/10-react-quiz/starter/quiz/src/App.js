@@ -1,43 +1,56 @@
-import Main from "./Main.js";
+import Main from "./Main";
+import Header from "./Header";
+import Loader from "./Loader";
+import StartScreen from "./StartScreen";
+import Error from "./Error";
 import { useEffect, useReducer } from "react";
-import Header from "./Header.js";
-import DateCounter from "./DateCounter.js";
 
 const initialState = {
-  questions: [],
-  // 'loading', 'error', 'ready', 'active', 'finished'
-  status: "loading",
+	questions: [],
+
+	//loading, error, ready, active, finished
+	status: "loading"
 };
 
-function reducer(state, action) {
-  switch (action.type) {
-    case "dataReceived":
-      return { ...state, questions: action.payload, status: "ready" };
-    case "dataFailed":
-      return { ...state, status: "error" };
-    default:
-      throw new Error("action unknown");
-  }
+function reducer(state, action){
+	switch(action.type){
+		case "dataReceived":
+			return {
+				...state,
+				questions: action.payload,
+				status: "ready",
+			}
+		case "dataFailed":
+			return {
+				...state,
+				status: "error",
+			}
+		default:
+			throw new Error("action unknown");
+	}
 }
 
 export default function App() {
-  const [state, dispatch] = useReducer(reducer, initialState);
+	const [{questions, status}, dispatch] = useReducer(reducer, initialState);
 
-  useEffect(function () {
-    fetch("http://localhost:9000/questions")
-      .then((res) => res.json())
-      .then((data) => dispatch({ type: "dataReceived", payload: data }))
-      .catch((error) => dispatch({ type: "dataFailed" }));
-  }, []);
+	const numQuestions = questions.length;
+
+	useEffect(function(){
+		fetch("http://localhost:9000/questions")
+			.then((res)=> res.json())
+			.then((data)=> dispatch({type: "dataReceived", payload: data}))
+			.catch((err)=> dispatch({type: "dataFailed"}))
+	},[])
+
   return (
-    <div>
-      {/* <DateCounter /> */}
-      <Header />
-      <Main>
-        <DateCounter />
-        <p>1/15</p>
-        <p>Question?</p>
-      </Main>
+    <div className="app">
+		<Header/>
+		<Main>
+			{status === "loading" && <Loader/>}
+			{status === "error" && <Error/>}
+			{status === "ready" && <StartScreen numQuestions={numQuestions}/>}
+
+		</Main>
     </div>
   );
 }
