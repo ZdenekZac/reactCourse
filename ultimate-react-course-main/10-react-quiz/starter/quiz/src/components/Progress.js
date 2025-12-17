@@ -1,5 +1,4 @@
 function Progress({index, numQuestions, answer, points, maxPossiblePoints}){
-	if (answer === null) return null;
 
 	return (
 		<header className="progress">
