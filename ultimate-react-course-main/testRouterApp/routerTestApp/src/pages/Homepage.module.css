@@ -1,4 +1,10 @@
-.homepage{
+.homepage {
   background-color: rgb(27, 162, 162);
   height: 90vh;
+}
+
+.homepage a {
+  text-decoration: none;
+  color: black;
+  padding: 5px 10px;
 }
