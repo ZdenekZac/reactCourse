@@ -1,16 +1,15 @@
 import styles from "./Homepage.module.css";
-import { NavLink } from "react-router-dom";
-import Red from "./Red";
-import Green from "./Green";
+import Sidebar from "../components/Sidebar";
+import AppMap from "../components/AppMap";
 
 function Homepage() {
-  return (
-    <div className={styles.homepage}>
+  return (<>
       <p>HOMEPAGE</p>
-
-      <NavLink to="red">Red</NavLink>
-      <NavLink to="green">Green</NavLink>
+    <div className={styles.homepage}>
+      <Sidebar/>
+      <AppMap/>
     </div>
+  </>
   );
 }
 
