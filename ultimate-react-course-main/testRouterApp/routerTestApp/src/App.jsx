@@ -17,29 +17,38 @@ const tempCities = [
 ];
 
 function App() {
- 
   return (
     <div>
       <p>APP</p>
       <BrowserRouter>
-      <NavLink className={styles.link} to="/app/home">Home</NavLink>
-      <NavLink className={styles.link}  to="/app/red">Red</NavLink>
-      <NavLink className={styles.link}  to="/app/green">Green</NavLink>
-      <NavLink className={styles.link} to="/app/color/orange">Orange</NavLink>
-      <NavLink className={styles.link} to="/app/color/blue">Blue</NavLink>
+        <NavLink className={styles.link} to="/app/home">
+          Home
+        </NavLink>
+        <NavLink className={styles.link} to="/app/red">
+          Red
+        </NavLink>
+        <NavLink className={styles.link} to="/app/green">
+          Green
+        </NavLink>
+        <NavLink className={styles.link} to="/app/color/orange">
+          Orange
+        </NavLink>
+        <NavLink className={styles.link} to="/app/color/blue">
+          Blue
+        </NavLink>
         <Routes>
-          <Route path="app" element={<AppLayout />} >
+          <Route path="app" element={<AppLayout />}>
             <Route index element={<Navigate replace to="home" />} />
-            <Route path="color/:colorName" element={<ColorDetail/>}/>
+            <Route path="color/:colorName" element={<ColorDetail />} />
             <Route path="red" element={<Red />} />
             <Route path="green" element={<Green />} />
-            <Route path="home" element={<Homepage />} >
+            <Route path="home" element={<Homepage />}>
               <Route index element={<Navigate replace to="cities" />} />
-              <Route path="cities" element={<CityList />}/>  
-              <Route path="countries" element={<CountryList />}/>  
+              <Route path="cities" element={<CityList />} />
+              <Route path="countries" element={<CountryList />} />
             </Route>
-            <Route path="cities" element={<CityList/>}/>
-            <Route path="countries" element={<CountryList/>}/>
+            <Route path="cities" element={<CityList />} />
+            <Route path="countries" element={<CountryList />} />
           </Route>
         </Routes>
       </BrowserRouter>
