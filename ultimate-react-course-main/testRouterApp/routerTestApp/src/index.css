@@ -1,5 +1,30 @@
-/* html {
-  font-size: 62.5%;
+:root {
+  /* Definice fontu pro celou aplikaci */
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  /* Barvy z WorldWise pro sjednocení */
+  --color-dark--1: #2d3439;
+  --color-dark--2: #42484d;
+  --color-light--1: #aaa;
+  --color-light--2: #ececec;
+  --color-light--3: #d6dee0;
+}
+
+* {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
-  background-color: rgb(214, 142, 142);
-} */
+}
+
+html {
+  font-size: 62.5%; /* Tímto nastavíš 1rem = 10px, lépe se s tím počítá */
+}
+
+body {
+  font-family: inherit;
+  color: var(--color-light--2);
+  background-color: var(--color-dark--1);
+  -webkit-font-smoothing: antialiased;
+}

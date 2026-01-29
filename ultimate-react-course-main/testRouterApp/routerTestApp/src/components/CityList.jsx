@@ -1,10 +1,12 @@
 import CityItem from "./CityItem";
+import styles from "./CityList.module.css"
 
-function CityList() {
+function CityList({cities}) {
+ 
   return (
-    <ul>
-      <CityItem city="Praha"/>
-      <CityItem city="Brno"/>
+    <ul className={styles.cityList}>
+      {cities.map((city)=>
+      ( <CityItem key={city.id} city={city}/>))}
     </ul>
   );
 }

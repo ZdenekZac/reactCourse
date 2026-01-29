@@ -12,8 +12,22 @@ import ColorDetail from "./components/ColorDetail";
 import AppLayout from "./pages/AppLayout";
 
 const tempCities = [
-  { id: 1, cityName: "Praha", country: "Česko", emoji: "🇨🇿", date: "2023-10-01" },
-  { id: 2, cityName: "Paříž", country: "Francie", emoji: "🇫🇷", date: "2023-12-15" },
+  {
+    id: 1,
+    cityName: "Praha",
+    country: "Česko",
+    emoji: "🇨🇿",
+    date: "2023-10-01",
+    position: { lat: 50.07, lng: 14.43 }, // Přidáno sem
+  },
+  {
+    id: 2,
+    cityName: "Paříž",
+    country: "Francie",
+    emoji: "🇫🇷",
+    date: "2023-12-15",
+    position: { lat: 48.85, lng: 2.35 }, // Přidáno sem
+  },
 ];
 
 function App() {
@@ -44,11 +58,10 @@ function App() {
             <Route path="green" element={<Green />} />
             <Route path="home" element={<Homepage />}>
               <Route index element={<Navigate replace to="cities" />} />
-              <Route path="cities" element={<CityList />} />
-              <Route path="countries" element={<CountryList />} />
+              <Route path="cities" element={<CityList cities={tempCities} />} />
+              <Route path="cities/:id" element={<p>Detail mesta s ID z URL</p>}/>
+              <Route path="countries" element={<CountryList countries={tempCities}/>} />
             </Route>
-            <Route path="cities" element={<CityList />} />
-            <Route path="countries" element={<CountryList />} />
           </Route>
         </Routes>
       </BrowserRouter>

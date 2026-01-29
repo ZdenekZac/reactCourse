@@ -1,0 +1,24 @@
+.cityList {
+  width: 100%;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  padding: 0;
+    color: rgb(206, 26, 26);
+}
+
+.cityItem {
+  display: flex;
+  align-items: center;
+  gap: 1.6rem;
+  background-color: #2d3439;
+  border-radius: 7px;
+  padding: 1rem 2rem;
+  border-left: 5px solid #00c46a; /* Zelený proužek jako ve WorldWise */
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.name { font-size: 1.6rem; font-weight: 600;   color: rgb(206, 26, 26);}
+.date { font-size: 1.3rem; margin-left: auto;   color: rgb(206, 26, 26);}
