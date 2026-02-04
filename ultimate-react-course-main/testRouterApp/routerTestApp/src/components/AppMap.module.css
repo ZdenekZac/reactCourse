@@ -1,0 +1,10 @@
+.mapContainer {
+  flex: 1;
+  height: 100%;
+  position: relative;
+}
+
+/* Toto je klíčové - komponenta MapContainer musí mít výšku */
+.map {
+  height: 100%;
+}

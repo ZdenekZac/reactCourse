@@ -59,7 +59,7 @@ function App() {
             <Route path="home" element={<Homepage />}>
               <Route index element={<Navigate replace to="cities" />} />
               <Route path="cities" element={<CityList cities={tempCities} />} />
-              <Route path="cities/:id" element={<p>Detail mesta s ID z URL</p>}/>
+              <Route path="cities/:id" element={<CityList cities={tempCities}/>}/>
               <Route path="countries" element={<CountryList countries={tempCities}/>} />
             </Route>
           </Route>

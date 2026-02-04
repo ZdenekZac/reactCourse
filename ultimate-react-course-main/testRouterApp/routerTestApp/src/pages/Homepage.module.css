@@ -1,8 +1,10 @@
 .homepage {
   background-color: rgb(27, 162, 162);
-  height: 60vh;
+  
   width: 100%;
     display: flex;
+  height: calc(100vh - 5rem); 
+  overflow: hidden;
 }
 
 .homepage a {

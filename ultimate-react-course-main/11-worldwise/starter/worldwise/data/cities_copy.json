@@ -1,0 +1,28 @@
+{
+  "cities": [
+    {
+      "cityName": "Avila",
+      "country": "Spain",
+      "emoji": "🇪🇸",
+      "date": "2026-02-02T16:36:09.828Z",
+      "notes": "",
+      "position": {
+        "lat": "40.64730356252251",
+        "lng": "-4.5936531428737"
+      },
+      "id": 1
+    },
+    {
+      "cityName": "Prague",
+      "country": "Czechia",
+      "emoji": "🇨🇿",
+      "date": "2026-02-03T13:54:29.325Z",
+      "notes": "lklklkl",
+      "position": {
+        "lat": "50.05008477838256",
+        "lng": "14.34466437327932"
+      },
+      "id": 2
+    }
+  ]
+}
