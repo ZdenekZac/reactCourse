@@ -3,13 +3,12 @@ import Sidebar from "../components/Sidebar";
 import AppMap from "../components/AppMap";
 
 function Homepage() {
-  return (<>
-      <p>HOMEPAGE</p>
+  return (
     <div className={styles.homepage}>
       <Sidebar/>
       <AppMap/>
     </div>
-  </>
+
   );
 }
 
