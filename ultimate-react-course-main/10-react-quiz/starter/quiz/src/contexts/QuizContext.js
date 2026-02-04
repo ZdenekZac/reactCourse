@@ -1,9 +1,9 @@
+import { createContext, useEffect, useContext, useReducer } from "react";
 
 const SECS_PER_QUESTION = 30;
 
 const initialState = {
   questions: [],
-
   //loading, error, ready, active, finished
   status: "loading",
   index: 0,
@@ -69,4 +69,11 @@ function reducer(state, action) {
     default:
       throw new Error("action unknown");
   }
+}
+
+function QuizProvider({ children }) {
+  const [{ status, questions, index, answer, points, highscore, secondsRemaining }, dispatch] = useReducer(
+    reducer,
+    initialState,
+  );
 }
