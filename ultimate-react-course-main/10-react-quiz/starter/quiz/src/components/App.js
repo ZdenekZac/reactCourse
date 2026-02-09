@@ -12,8 +12,7 @@ import Timer from "./Timer";
 import { useQuiz } from "../contexts/QuizContext";
 
 export default function App() {
-  const {status} = useQuiz();
-
+  const { status } = useQuiz();
   return (
     <div className="app">
       <Header />
@@ -23,17 +22,16 @@ export default function App() {
         {status === "ready" && <StartScreen />}
         {status === "active" && (
           <>
-            <Progress/>
+            <Progress />
+
             <Question />
             <Footer>
-              <Timer/>
+              <Timer />
               <NextButton />
             </Footer>
           </>
         )}
-        {status === "finished" && (
-          <FinishScreen />
-        )}
+        {status === "finished" && <FinishScreen />}
       </Main>
     </div>
   );

@@ -9,7 +9,7 @@ root.render(
   
   <React.StrictMode>
     <QuizProvider>
-    <App />
-  </QuizProvider>
-  </React.StrictMode>
+      <App />
+    </QuizProvider>
+  </React.StrictMode>,
 );

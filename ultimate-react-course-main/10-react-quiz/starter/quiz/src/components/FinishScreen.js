@@ -1,7 +1,10 @@
 import { useQuiz } from "../contexts/QuizContext";
 
 function FinishScreen() {
+<<<<<<< HEAD
 
+=======
+>>>>>>> 7448ab4183a2dbf2770392da61f8db26f98b80fe
   const { points, dispatch, maxPossiblePoints, highscore } = useQuiz();
   const percentage = (points / maxPossiblePoints) * 100;
 
