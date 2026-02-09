@@ -10,7 +10,6 @@ import { MapContainer, TileLayer, Marker, Popup, useMap, useMapEvents } from "re
 function Map() {
   const { cities } = useCities();
   const [mapPosition, setMapPosition] = useState([40, 0]);
-  const [searchParams] = useSearchParams();
   const { isLoading: isLoadingPosition, position: geolocationPosition, getPosition } = useGeolocation();
   const [mapLat, mapLng] = useUrlPosition();
 

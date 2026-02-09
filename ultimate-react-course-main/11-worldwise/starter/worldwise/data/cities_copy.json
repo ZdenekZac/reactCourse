@@ -23,6 +23,42 @@
         "lng": "14.34466437327932"
       },
       "id": 2
+    },
+    {
+      "cityName": "Huerta de Valdecarabanos",
+      "country": "Spain",
+      "emoji": "🇪🇸",
+      "date": "2026-02-09T09:14:10.859Z",
+      "notes": "",
+      "position": {
+        "lat": "39.842286020743394",
+        "lng": "-3.6273377991652405"
+      },
+      "id": 3
+    },
+    {
+      "cityName": "Bad Lauterberg im Harz",
+      "country": "Germany",
+      "emoji": "🇩🇪",
+      "date": "2026-02-09T09:14:20.823Z",
+      "notes": "",
+      "position": {
+        "lat": "51.60437164681676",
+        "lng": "10.434560286720352"
+      },
+      "id": 4
+    },
+    {
+      "cityName": "Neustadt a.d.Aisch",
+      "country": "Germany",
+      "emoji": "🇩🇪",
+      "date": "2026-02-09T09:53:06.390Z",
+      "notes": "sdfsdf",
+      "position": {
+        "lat": "49.56797785892715",
+        "lng": "10.629009137287495"
+      },
+      "id": 5
     }
   ]
 }
