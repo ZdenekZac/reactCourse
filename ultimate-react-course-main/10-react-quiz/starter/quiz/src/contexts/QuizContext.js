@@ -4,7 +4,6 @@ const QuizContext = createContext();
 
 const SECS_PER_QUESTION = 30;
 
-const QuizContext = createContext();
 
 const initialState = {
   questions: [],
@@ -129,50 +128,6 @@ function QuizProvider({ children }) {
          dispatch
       }}>
           {children}
-    </QuizContext.Provider>
-  );
-  const question = questions[index];
-  const numQuestions = questions.length;
-  const maxPossiblePoints = questions.reduce((prev, cur) => prev + cur.points, 0);
-
-  //   useEffect(function () {
-  //     fetch("http://localhost:9000/questions")
-  //       .then((res) => res.json())
-  //       .then((data) => dispatch({ type: "dataReceived", payload: data }))
-  //       .catch((err) => dispatch({ type: "dataFailed" }));
-  //   }, []);
-
-  useEffect(function () {
-    async function fetchQuestions() {
-      dispatch({ type: "loading" });
-
-      try {
-        const res = await fetch("http://localhost:9000/questions");
-        const data = await res.json();
-        dispatch({ type: "dataReceived", payload: data });
-      } catch {
-        throw new Error("there was a problem with fetching data...");
-      }
-    }
-    fetchQuestions();
-  }, []);
-
-  return (
-    <QuizContext.Provider
-      value={{
-        questions,
-        question,
-        status,
-        index,
-        answer,
-        points,
-        highscore,
-        secondsRemaining,
-        numQuestions,
-        maxPossiblePoints,
-        dispatch,
-      }}>
-      {children}
     </QuizContext.Provider>
   );
 }
