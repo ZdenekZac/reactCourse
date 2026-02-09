@@ -1,6 +1,16 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Calculator from "./Calculator";
 import ToggleSounds from "./ToggleSounds";
+
+function formatTime(date) {
+  return new Intl.DateTimeFormat("en", {
+    month: "short",
+    year: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+      second: "2-digit",
+    }).format(date);
+  }
 
 function App() {
   const [allowSound, setAllowSound] = useState(true);
@@ -9,16 +19,17 @@ function App() {
   // Will be be AM or PM
   const partOfDay = time.slice(-2);
 
-  const workouts = [
-    {
-      name: "Full-body workout",
-      numExercises: partOfDay === "AM" ? 9 : 8,
-    },
-    {
-      name: "Arms + Legs",
-      numExercises: 6,
-    },
-    {
+  const workouts = useMemo(()=> {
+      return    [
+      {
+        name: "Full-body workout",
+        numExercises: partOfDay === "AM" ? 9 : 8,
+      },
+      {
+        name: "Arms + Legs",
+        numExercises: 6,
+      },
+      {
       name: "Arms only",
       numExercises: 3,
     },
@@ -31,22 +42,15 @@ function App() {
       numExercises: partOfDay === "AM" ? 5 : 4,
     },
   ];
+},[partOfDay]
+) 
 
-  function formatTime(date) {
-    return new Intl.DateTimeFormat("en", {
-      month: "short",
-      year: "2-digit",
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-    }).format(date);
-  }
+      console.log(formatTime());
 
   useEffect(function () {
     const id = setInterval(function () {
       setTime(formatTime(new Date()));
     }, 1000);
-
     return () => clearInterval(id);
   }, []);
 
