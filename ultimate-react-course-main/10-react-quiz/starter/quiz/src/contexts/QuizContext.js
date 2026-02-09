@@ -2,6 +2,8 @@ import { createContext, useEffect, useContext, useReducer } from "react";
 
 const SECS_PER_QUESTION = 30;
 
+const QuizContext = createContext();
+
 const initialState = {
   questions: [],
   //loading, error, ready, active, finished
@@ -14,14 +16,21 @@ const initialState = {
 };
 
 function reducer(state, action) {
-  switch (action.type) {
+    switch (action.type) {
+
+      case "loading":
+        return {
+          ...state,
+          status: "loading",
+        }
+
     case "dataReceived":
       return {
         ...state,
         questions: action.payload,
         status: "ready",
       };
-    case "dataFailed":
+      case "dataFailed":
       return {
         ...state,
         status: "error",
@@ -71,9 +80,63 @@ function reducer(state, action) {
   }
 }
 
-function QuizProvider({ children }) {
-  const [{ status, questions, index, answer, points, highscore, secondsRemaining }, dispatch] = useReducer(
+
+function QuizProvider({ children }){
+    const [{ questions, status, index, answer, points, highscore, secondsRemaining }, dispatch] = useReducer(
     reducer,
-    initialState,
+    initialState
+  );
+
+  const numQuestions = questions.length;
+  const maxPossiblePoints = questions.reduce((prev, cur) => prev + cur.points, 0);
+  const question = questions[index];
+  
+  
+  // useEffect(function () {
+  //   fetch("http://localhost:9000/questions")
+  //   .then((res) => res.json())
+  //   .then((data) => dispatch({ type: "dataReceived", payload: data }))
+  //   .catch((err) => dispatch({ type: "dataFailed" }));
+  // }, []);
+
+
+  useEffect(function(){
+    async function fetchQuestions(){
+      dispatch({type: "loading"});
+      try {
+        const res = await fetch("http://localhost:9000/questions");
+        const data = await res.json();
+        dispatch({type: "dataReceived", payload: data});
+      } catch {
+        dispatch({type:"dataFailed"})
+      }
+    }
+    fetchQuestions();
+  },[])
+
+  return (
+    <QuizContext.Provider
+      value={{
+         question, 
+         status, 
+         index, 
+         answer, 
+         points, 
+         highscore, 
+         secondsRemaining,
+         numQuestions,
+         maxPossiblePoints,
+         dispatch
+      }}>
+          {children}
+    </QuizContext.Provider>
   );
 }
+
+function useQuiz(){
+  const context = useContext(QuizContext);
+  if (context === undefined) throw new Error("QuizContext was used outside of the QuizProvider");
+  return context;
+}
+
+export {QuizProvider, useQuiz}
