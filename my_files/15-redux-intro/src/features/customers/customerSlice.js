@@ -1,16 +1,18 @@
-const initialStateAccount = {
-  balance: 0,
-  loan: 0,
-  loanPurpose: "",
-};
+import { createSlice } from "@reduxjs/toolkit";
 
-const initialStateCustomer = {
+const initialState = {
   fullName: "",
   nationalID: "",
   createAt: "",
 };
 
-export default function customerReducer(state = initialStateCustomer, action) {
+const customerSlice = createSlice({
+  name: "customer",
+  initialState,
+  reducers: {},
+});
+
+export default function customerReducer(state = initialState, action) {
   switch (action.type) {
     case "customer/createCustomer":
       return {
