@@ -19,6 +19,16 @@
     animation: loading 1s infinite linear;
   }
 
+  @layer utilities {
+    .no-scrollbar::-webkit-scrollbar {
+      display: none; /* Pro Chrome, Safari a Operu */
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none; /* Pro IE a Edge */
+      scrollbar-width: none; /* Pro Firefox */
+    }
+  }
+
   @keyframes loading {
     20% {
       background-position:
