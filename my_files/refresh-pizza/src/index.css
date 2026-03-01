@@ -1,0 +1,28 @@
+@import 'tailwindcss';
+
+@theme {
+  /* Ve v4 musíme použít přesně tento název proměnné pro font */
+  --font-family-sans: 'Roboto Mono', monospace;
+
+  /* Ostatní věci */
+  --font-size-huge: 8rem;
+  --line-height-huge: 1;
+}
+
+@layer base {
+  body {
+    /* Teď už by font-sans měl obsahovat Roboto Mono */
+    font-family: var(--font-family-sans);
+    @apply bg-stone-100 text-stone-800;
+  }
+}
+
+@layer components {
+  .input {
+    @apply rounded-full border border-stone-200 px-4 py-2 text-sm transition-all duration-300 placeholder:text-stone-400 focus:outline-none focus:ring focus:ring-yellow-400 md:px-6 md:py-3;
+  }
+
+  .button {
+    @apply inline-block rounded-full bg-yellow-400 font-semibold uppercase tracking-wide text-stone-800 transition-colors duration-300 hover:bg-yellow-300 focus:bg-yellow-300 focus:outline-none focus:ring focus:ring-yellow-300 focus:ring-offset-2 disabled:cursor-not-allowed;
+  }
+}
