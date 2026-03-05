@@ -1,10 +1,10 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Menu from './Menu';
-import Home from './Home';
+import Menu from './menu/Menu';
+import Home from './ui/Home';
 import React from 'react';
 import { getMenu } from './services/apiRestaurant';
-import CreateOrder, { createOrderAction } from './CreateOrder';
-import AppLayout from './AppLayout';
+import CreateOrder, { createOrderAction } from './order/CreateOrder';
+import AppLayout from './ui/AppLayout';
 
 const router = createBrowserRouter([
   {
