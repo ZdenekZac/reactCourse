@@ -1,0 +1,40 @@
+import { createSlice } from '@reduxjs/toolkit';
+import { current } from '@reduxjs/toolkit';
+
+const initialState = {
+  cart: [],
+  totalPrice: 0,
+};
+
+const cartSlice = createSlice({
+  name: 'cart',
+  initialState,
+  reducers: {
+    // Tady definujeme, CO se má stát
+    addItem(state, action) {
+      // action.payload bude celý objekt pizzy
+      state.cart.push(action.payload);
+      console.log(current(state.cart));
+    },
+    deleteItem(state, action) {
+      state.cart = state.cart.filter((item) => item.pizzaId !== action.payload);
+    },
+    increaseItemQuantity(state, action) {
+      const item = state.cart.find((item) => item.pizzaId === action.payload);
+      item.quantity++;
+      item.totalPrice = item.quantity * item.unitPrice;
+    },
+    decreaseItemQuantity(state, action) {
+      const item = state.cart.find((item) => item.pizzaId === action.payload);
+      item.quantity--;
+      item.totalPrice = item.quantity * item.unitPrice;
+      if (item.quantity === 0) cartSlice.caseReducers.deleteItem(state, action);
+    },
+    clearCart(state) {
+      state.cart = [];
+    },
+  },
+});
+
+export const { addItem, clearCart, deleteItem, increaseItemQuantity, decreaseItemQuantity } = cartSlice.actions;
+export default cartSlice.reducer;

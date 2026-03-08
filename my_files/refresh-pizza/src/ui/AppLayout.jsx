@@ -2,21 +2,24 @@ import React from 'react';
 import { Outlet, useNavigation } from 'react-router-dom';
 import CreateOrder from '../order/CreateOrder';
 import { useSelector } from 'react-redux';
+import Header from './Header';
+import CartOverview from '../features/cart/CartOverview';
+import Loader from './Loader';
 
 function AppLayout() {
-  const username = useSelector((state) => state.user.username);
   const navigation = useNavigation();
-  console.log(navigation);
   const isLoading = navigation.state === 'loading';
-
+  //const isLoading = true;
   return (
-    <div>
-      <header className=" flex items-center justify-between bg-green-500 text-2xl ">
-        <div className="invisible">Logo/Empty</div>
-        <p className="tracking-widest">HEADER</p>
-        <p className="text-sm font-semibold mr-8">{username}</p>
-      </header>
-      <Outlet />
+    <div className='grid h-screen grid-rows-[auto_1fr_auto]'>
+      {isLoading && <Loader />}
+      <Header />
+      <div className='overflow-scroll'>
+        <main className='mx-auto max-w-3xl overflow-scroll'>
+          <Outlet />
+        </main>
+      </div>
+      <CartOverview />
     </div>
   );
 }

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Button from '../ui/button';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { updateName } from '../features/userSlice';
+import { updateName } from './userSlice';
 
 function CreateUser() {
   const [username, setUsername] = useState('');
