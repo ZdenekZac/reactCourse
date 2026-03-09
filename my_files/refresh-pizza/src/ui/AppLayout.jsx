@@ -1,7 +1,6 @@
 import React from 'react';
 import { Outlet, useNavigation } from 'react-router-dom';
-import CreateOrder from '../order/CreateOrder';
-import { useSelector } from 'react-redux';
+import CreateOrder from '../features/order/CreateOrder';
 import Header from './Header';
 import CartOverview from '../features/cart/CartOverview';
 import Loader from './Loader';
