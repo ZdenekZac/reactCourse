@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import Button from '../ui/button';
+import Button from '../../ui/Button';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { updateName } from './userSlice';
