@@ -5,6 +5,7 @@ import React from 'react';
 import { getMenu } from './services/apiRestaurant';
 import CreateOrder, { createOrderAction } from './features/order/CreateOrder';
 import AppLayout from './ui/AppLayout';
+import Cart from './features/cart/Cart';
 
 const router = createBrowserRouter([
   {
@@ -13,6 +14,10 @@ const router = createBrowserRouter([
       {
         path: '/',
         element: <Home />,
+      },
+      {
+        path: '/cart',
+        element: <Cart />,
       },
       {
         path: '/menu',
