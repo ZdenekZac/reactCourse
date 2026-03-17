@@ -1,8 +1,11 @@
 import { Form, redirect, useActionData, useNavigation } from 'react-router-dom';
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 
-const isValidPhone = (str) => /^\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/.test(str);
+const isValidPhone = (str) =>
+  /^\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/.test(
+    str
+  );
 
 export default function CreateOrder() {
   const [withPriority, setWithPriority] = useState(false);
@@ -24,11 +27,13 @@ export default function CreateOrder() {
   return (
     <div>
       <h2>Create and Order</h2>
-      <Form method='POST'>
-        <input type='text' name='customer' placeholder='name' required />
-        <input type='text' name='number' placeholder='number' required />
-        <input type='text' name='address' placeholder='address' required />
-        <button disabled={isSubmitting}>{isSubmitting ? 'sending...' : 'Order now'}</button>
+      <Form method="POST">
+        <input type="text" name="customer" placeholder="name" required />
+        <input type="text" name="number" placeholder="number" required />
+        <input type="text" name="address" placeholder="address" required />
+        <button disabled={isSubmitting}>
+          {isSubmitting ? 'sending...' : 'Order now'}
+        </button>
       </Form>
     </div>
   );
