@@ -6,28 +6,41 @@ import { getMenu } from './services/apiRestaurant';
 import CreateOrder, { createOrderAction } from './features/order/CreateOrder';
 import AppLayout from './ui/AppLayout';
 import Cart from './features/cart/Cart';
+import Error from './ui/Error';
+import Order, {
+  loader as orderLoader,
+} from '../../fast-react-pizza/src/features/order/Order';
 
 const router = createBrowserRouter([
   {
     element: <AppLayout />,
+    errorElement: <Error />,
     children: [
       {
         path: '/',
         element: <Home />,
       },
       {
-        path: '/cart',
-        element: <Cart />,
-      },
-      {
         path: '/menu',
         element: <Menu />,
-        loader: getMenu,
+        loader: menuLoader,
+        errorElement: <Error />,
+      },
+      {
+        path: '/cart',
+        element: <Cart />,
       },
       {
         path: 'order/new',
         element: <CreateOrder />,
         action: createOrderAction,
+      },
+      {
+        path: '/order/:orderId',
+        element: <Order />,
+        loader: orderLoader,
+        errorElement: <Error />,
+        action: updateOrderAction,
       },
     ],
   },

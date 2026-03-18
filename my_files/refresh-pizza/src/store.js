@@ -8,5 +8,5 @@ const store = configureStore({
     user: userReducer,
   },
 });
-
+console.log(store);
 export default store;
