@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCart, getTotalCartPrice } from '../cart/cartSlice';
 import EmptyCart from '../cart/EmptyCart';
+import { fetchAddress } from '../user/userSlice';
 
 const isValidPhone = (str) =>
   /^\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/.test(
@@ -78,9 +79,31 @@ export default function CreateOrder() {
           </div>
           {!position.latitude && !position.longitude && (
             <span className="absolute right-[3px] top-[3px] z-50 md:right-[5px] md:top-[5px]">
-              <Button>Get Position</Button>
+              <Button
+                disabled={isLoadingAddress}
+                type="small"
+                onClick={(e) => {
+                  e.preventDefault();
+                  dispatch(fetchAddress());
+                }}
+              >
+                Get Position
+              </Button>
             </span>
           )}
+        </div>
+
+        <div className="mb-12 flex items-center gap-5">
+          <input
+            type="checkbox"
+            name="priority"
+            id="priority"
+            value={withPriority}
+            onChange={(e) => setWithPriority(e.target.checked)}
+          />
+          <label htmlFor="priority" className="font-medium">
+            Want to give your order priority?
+          </label>
         </div>
 
         <button disabled={isSubmitting}>
@@ -90,3 +113,5 @@ export default function CreateOrder() {
     </div>
   );
 }
+
+export async function action({ request }) {}
