@@ -1,13 +1,17 @@
 import { Form, redirect, useActionData, useNavigation } from 'react-router-dom';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCart, getTotalCartPrice } from '../cart/cartSlice';
+import { clearCart, getCart, getTotalCartPrice } from '../cart/cartSlice';
 import EmptyCart from '../cart/EmptyCart';
 import { fetchAddress } from '../user/userSlice';
+import { createOrder } from '../../services/apiRestaurant';
+import store from '../../store';
+import Button from '../../ui/Button';
+import { formatCurrency } from '../../utils/helpers';
 
 const isValidPhone = (str) => /^\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/.test(str);
 
-export default function CreateOrder() {
+function CreateOrder() {
   const [withPriority, setWithPriority] = useState(false);
 
   const {
@@ -92,10 +96,42 @@ export default function CreateOrder() {
           </label>
         </div>
 
-        <button disabled={isSubmitting}>{isSubmitting ? 'sending...' : 'Order now'}</button>
+        <div className='p-4'>
+          <input type='hidden' name='cart' value={JSON.stringify(cart)} />
+          <input
+            type='hidden'
+            name='postion'
+            value={position.longitude && position.latitude ? `${position.latitude}, ${position.longitude}` : ''}
+          />
+          <Button disabled={isSubmitting} type='primary'>
+            {isSubmitting ? 'sending...' : `Order now for ${formatCurrency(totalPrice)}`}
+          </Button>
+        </div>
       </Form>
     </div>
   );
 }
 
-export async function action({ request }) {}
+export async function action({ request }) {
+  const formData = await request.formData();
+  const data = Object.fromEntries(formData);
+  const order = {
+    ...data,
+    cart: JSON.parse(data.cart),
+    priority: data.priority === 'true',
+  };
+  console.log(order);
+  const errors = {};
+
+  if (!isValidPhone(order.phone)) errors.phone = 'Please give us your correct phone number. We might contact you';
+
+  if (!Object.keys(errors).length > 0) return errors;
+
+  const newOrder = await createOrder(order);
+
+  store.dispatch(clearCart());
+
+  return redirect(`/order/${newOrder.id}`);
+}
+
+export default CreateOrder;
