@@ -36,9 +36,9 @@ export async function updateOrder(id, updateObj) {
         'Content-Type': 'application/json',
       },
     });
-
     if (!res.ok) throw Error();
+    //we dont need data this time
   } catch (err) {
-    throw Error('failded updating your order');
+    throw Error('Failed updating your order');
   }
 }
