@@ -6,7 +6,7 @@ import CreateOrder, { action as createOrderAction } from './features/order/Creat
 import AppLayout from './ui/AppLayout';
 import Cart from './features/cart/Cart';
 import Error from './ui/Error';
-import Order, { loader as orderLoader } from '../../fast-react-pizza/src/features/order/Order';
+import Order, { loader as orderLoader } from './features/order/Order';
 import { action as updateOrderAction } from './features/order/UpdateOrder';
 
 const router = createBrowserRouter([

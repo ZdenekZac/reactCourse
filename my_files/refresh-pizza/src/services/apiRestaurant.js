@@ -9,6 +9,13 @@ export async function getMenu() {
   return data;
 }
 
+export async function getOrder(id) {
+  const res = await fetch(`${API_URL}/order/${id}`);
+  if (!res.ok) throw Error(`Couldnt find order #${id}`);
+  const { data } = await res.json();
+  return data;
+}
+
 export async function createOrder(newOrder) {
   try {
     const res = await fetch(`${API_URL}/order`, {
@@ -39,6 +46,6 @@ export async function updateOrder(id, updateObj) {
     if (!res.ok) throw Error();
     //we dont need data this time
   } catch (err) {
-    throw Error('Failed updating your order');
+    throw Error(`Failed updating your order - ${err}`);
   }
 }
