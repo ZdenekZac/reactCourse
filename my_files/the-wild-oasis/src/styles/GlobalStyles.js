@@ -1,3 +1,5 @@
+import { createGlobalStyle } from 'styled-components';
+
 /*
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -13,6 +15,7 @@
 
 /* Colors adapted from https://tailwindcss.com/docs/customizing-colors */
 
+const GlobalStyles = createGlobalStyle`
 :root {
   /* Indigo */
   --color-brand-50: #eef2ff;
@@ -154,7 +157,7 @@ img {
   /* For dark mode */
   filter: grayscale(var(--image-grayscale)) opacity(var(--image-opacity));
 }
-
+`;
 /*
 FOR DARK MODE
 
@@ -194,3 +197,5 @@ FOR DARK MODE
 --image-grayscale: 10%;
 --image-opacity: 90%;
 */
+
+export default GlobalStyles;
