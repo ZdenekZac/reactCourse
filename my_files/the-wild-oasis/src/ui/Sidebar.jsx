@@ -12,6 +12,7 @@ const StyledSidebar = styled.aside`
   flex-direction: column;
   gap: 3.2rem;
 `;
+
 function Sidebar() {
   return (
     <StyledSidebar>
