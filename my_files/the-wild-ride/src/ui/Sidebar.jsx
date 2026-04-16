@@ -1,0 +1,17 @@
+import styled from 'styled-components';
+
+const StyledSidebar = styled.aside`
+  background-color: var(--color-sky-600);
+  padding: 3.2rem 2.4rem;
+  border-right: 1px solid var(--color-grey-100);
+`;
+
+function Sidebar() {
+  return (
+    <StyledSidebar>
+      <p>SIDEBAR</p>
+    </StyledSidebar>
+  );
+}
+
+export default Sidebar;
