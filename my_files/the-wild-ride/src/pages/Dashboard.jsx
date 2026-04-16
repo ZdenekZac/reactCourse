@@ -1,7 +1,9 @@
+import Heading from '../ui/Heading';
+
 function Dashboard() {
   return (
     <div>
-      <h1>Dashboard</h1>
+      <Heading as='h1'>Dashboard</Heading>
     </div>
   );
 }
