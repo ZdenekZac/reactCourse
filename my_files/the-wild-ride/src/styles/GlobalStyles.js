@@ -1,5 +1,20 @@
 import { createGlobalStyle } from 'styled-components';
 
+// BARVY LOGO*  Hlavní barva značky (ta modrá z dodávky) */
+// --color-brand-500: #4fa8c2;
+// --color-brand-600: #3d8ba2; /* Trochu tmavší na hover */
+
+// /* Akcenty (lesy a příroda) */
+// --color-accent-green: #065f46;
+// --color-accent-brown: #92400e;
+
+// /* Neutrální barvy (hory) */
+// --color-grey-400: #94a3b8;
+// --color-grey-900: #0f172a; /* Skoro černá pro hlavní text */
+
+// /* Pozadí */
+// --color-bg-light: #f8fafc;
+
 const GlobalStyles = createGlobalStyle`
 :root {
   /* SKY */

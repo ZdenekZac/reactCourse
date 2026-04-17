@@ -26,11 +26,11 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route element={<AppLayout />}>
-              <Route index element={<Navigate replace to='dashboard' />} />
-              <Route path='dashboard' element={<Dashboard />} />
-              <Route path='rentals' element={<Rentals />} />
-              <Route path='vans' element={<Vans />} />
-              <Route path='login' element={<Login />} />
+              <Route index element={<Navigate replace to="dashboard" />} />
+              <Route path="dashboard" element={<Dashboard />} />
+              <Route path="rentals" element={<Rentals />} />
+              <Route path="vans" element={<Vans />} />
+              <Route path="login" element={<Login />} />
             </Route>
           </Routes>
         </BrowserRouter>
