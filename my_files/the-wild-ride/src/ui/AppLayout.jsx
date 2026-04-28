@@ -4,8 +4,7 @@ import Header from './Header';
 import { Outlet } from 'react-router-dom';
 
 const StyledAppLayout = styled.div`
-  color: var(--color-grey-600);
-  background-color: var(--color-sky-200);
+  color: var(--color-amber-400);
   border: 1px solid green;
   display: grid;
   grid-template-columns: 26rem 1fr;
@@ -14,7 +13,7 @@ const StyledAppLayout = styled.div`
 `;
 
 const Main = styled.main`
-  background-color: var(--color-sky-400);
+  background-color: var(--color-emerald-600);
   padding: 4rem 4.8rem 6.4rem;
   overflow: scroll;
 `;

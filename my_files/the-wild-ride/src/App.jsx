@@ -8,6 +8,9 @@ import Dashboard from './pages/Dashboard';
 import Rentals from './pages/Rentals';
 import Vans from './pages/Vans';
 import Login from './pages/Login';
+import Guests from './pages/Guests';
+import Staff from './pages/Staff';
+import Settings from './pages/Settings';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -26,11 +29,13 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route element={<AppLayout />}>
-              <Route index element={<Navigate replace to='dashboard' />} />
-              <Route path='dashboard' element={<Dashboard />} />
-              <Route path='rentals' element={<Rentals />} />
-              <Route path='vans' element={<Vans />} />
-              <Route path='login' element={<Login />} />
+              <Route index element={<Navigate replace to="dashboard" />} />
+              <Route path="dashboard" element={<Dashboard />} />
+              <Route path="rentals" element={<Rentals />} />
+              <Route path="vans" element={<Vans />} />
+              <Route path="staff" element={<Staff />} />
+              <Route path="guests" element={<Guests />} />
+              <Route path="settings" element={<Settings />} />
             </Route>
           </Routes>
         </BrowserRouter>

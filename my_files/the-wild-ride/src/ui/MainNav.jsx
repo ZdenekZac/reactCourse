@@ -30,7 +30,7 @@ const StyledNavLink = styled(NavLink)`
 
   &:hover,
   &:active {
-    color: var(--color-grey-200);
+    color: var(--color-ember-600);
     background-color: var(--color-emerald-400);
     border-radius: var(--border-radius-sm);
   }
@@ -40,37 +40,37 @@ function MainNav() {
   return (
     <NavList>
       <li>
-        <StyledNavLink to='/dashboard'>
+        <StyledNavLink to="/dashboard">
           <HiOutlineHome />
           <span>Home</span>
         </StyledNavLink>
       </li>
       <li>
-        <StyledNavLink to='/rentals'>
+        <StyledNavLink to="/rentals">
           <MdOutlineCarRental />
           <span>Rentals</span>
         </StyledNavLink>
       </li>
       <li>
-        <StyledNavLink to='/vans'>
+        <StyledNavLink to="/vans">
           <LiaShuttleVanSolid />
           <span>Vans</span>
         </StyledNavLink>
       </li>
       <li>
-        <StyledNavLink to='/staff'>
+        <StyledNavLink to="/staff">
           <GrUserWorker />
           <span>Staff</span>
         </StyledNavLink>
       </li>
       <li>
-        <StyledNavLink to='/guests'>
+        <StyledNavLink to="/guests">
           <GoPeople />
           <span>Guests</span>
         </StyledNavLink>
       </li>
       <li>
-        <StyledNavLink to='/settings'>
+        <StyledNavLink to="/settings">
           <IoSettingsOutline />
           <span>Settings</span>
         </StyledNavLink>
