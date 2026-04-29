@@ -20,26 +20,7 @@ const queryClient = new QueryClient({
   },
 });
 
-// DATA TESTING BLOCK ////////////////////////
-
-import { useEffect } from 'react';
-import supabase from './services/supabase';
-
 function App() {
-  useEffect(function () {
-    async function testConnection() {
-      const { data, error } = await supabase.from('vans').select('*').limit(1);
-
-      if (error) {
-        console.log('shite mate');
-      } else {
-        console.log('cajk dude', data);
-      }
-    }
-
-    testConnection();
-  }, []);
-  ///// DATA TESTING BLOCK END ////////////////////////
   return (
     <>
       <QueryClientProvider client={queryClient}>
@@ -48,13 +29,13 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route element={<AppLayout />}>
-              <Route index element={<Navigate replace to="dashboard" />} />
-              <Route path="dashboard" element={<Dashboard />} />
-              <Route path="rentals" element={<Rentals />} />
-              <Route path="vans" element={<Vans />} />
-              <Route path="staff" element={<Staff />} />
-              <Route path="guests" element={<Guests />} />
-              <Route path="settings" element={<Settings />} />
+              <Route index element={<Navigate replace to='dashboard' />} />
+              <Route path='dashboard' element={<Dashboard />} />
+              <Route path='rentals' element={<Rentals />} />
+              <Route path='vans' element={<Vans />} />
+              <Route path='staff' element={<Staff />} />
+              <Route path='guests' element={<Guests />} />
+              <Route path='settings' element={<Settings />} />
             </Route>
           </Routes>
         </BrowserRouter>
