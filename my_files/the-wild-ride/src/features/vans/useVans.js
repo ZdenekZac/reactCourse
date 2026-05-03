@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { getVans } from '../../services/apiVans';
 
-function useVans() {
+export function useVans() {
   const {
     isLoading,
     data: vans,
@@ -10,6 +10,6 @@ function useVans() {
     queryKey: ['vans'],
     queryFn: getVans,
   });
-  console.log(name);
-  return { isLoading, error, cabins };
+
+  return { isLoading, error, vans };
 }
