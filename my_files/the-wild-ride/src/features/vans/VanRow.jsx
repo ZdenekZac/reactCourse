@@ -20,20 +20,21 @@ const TableRow = styled.div`
   border-bottom: 0.5px solid var(--color-grey-100);
 
   &:hover {
-    font-weight: 600;
+    background-color: var(--color-emerald-400);
 
-    ${Img} {
+    /* ${Img} {
       transform: scale(1.9) translateX(0.7rem) translateY(-0.4rem);
-    }
+    } */
   }
 `;
 
 const Van = styled.div`
   font-size: 1.6rem;
-
   font-family: 'Sono';
 `;
-const Features = styled.div``;
+const Features = styled.div`
+  overflow: scroll;
+`;
 const Price = styled.div``;
 const Discount = styled.div``;
 

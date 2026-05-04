@@ -13,9 +13,7 @@ export async function getVans() {
 export async function createEditVan(newVan, id) {
   const hasImagePath = newVan.image?.startsWith?.(supabaseUrl);
   const imageName = `${Math.random()}-${newVan.image.name}`.replace('/', '');
-  const imagePath = hasImagePath
-    ? newVan.image
-    : `${supabaseUrl}/storage/v1/object/public/van-images/${imageName}`;
+  const imagePath = hasImagePath ? newVan.image : `${supabaseUrl}/storage/v1/object/public/van-images/${imageName}`;
 
   //1. Create/Edit van
   let query = supabase.from('vans');
@@ -36,23 +34,19 @@ export async function createEditVan(newVan, id) {
   // 2. upload image
   if (hasImagePath) return data;
 
-  const { error: storageError } = await supabase.storage
-    .from('vans-images')
-    .upload(imageName, newVan.image);
+  const { error: storageError } = await supabase.storage.from('vans-images').upload(imageName, newVan.image);
 
   // 3. delete the cabin IF there was an error uploading image
   if (storageError) {
     await supabase.from('vans').delete().eq('id', data.id);
     console.error(storageError);
-    throw new Error(
-      'cabin image could not be uploaded and the cabin was not created :('
-    );
+    throw new Error('cabin image could not be uploaded and the cabin was not created :(');
   }
 
   return data;
 }
 
-export async function deleteCabin(id) {
+export async function deleteVan(id) {
   try {
     const { data, error } = await supabase.from('cabins').delete().eq('id', id);
 
