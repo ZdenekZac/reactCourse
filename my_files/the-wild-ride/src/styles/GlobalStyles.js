@@ -17,6 +17,7 @@ import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyles = createGlobalStyle`
 :root {
+    --color-red-700: #b91c1c;
   /* SKY */
   --color-sky-200: #bae6fd;
   --color-sky-400: #38bdf8;

@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 const Img = styled.img`
   display: block;
-  width: 6.4rem;
+  width: 6.8rem;
   aspect-ratio: 3/2;
   object-fit: cover;
   transform: scale(1.5);
@@ -14,7 +14,7 @@ const TableRow = styled.div`
   grid-template-columns: 0.6fr 0.6fr 0.6fr 0.8fr 0.6fr 0.6fr 1fr;
   column-gap: 2.4rem;
   align-items: center;
-  padding: 1.4rem;
+  padding: 1rem;
   color: var(--color-grey-600);
   background-color: var(--color-emerald-200);
   border-bottom: 0.5px solid var(--color-grey-100);
@@ -39,7 +39,16 @@ const Price = styled.div``;
 const Discount = styled.div``;
 
 function VanRow({ van }) {
-  const { id: vanId, registrationPlate: plate, name, maxCapacity, regularPrice, discount, image, features } = van;
+  const {
+    id: vanId,
+    registrationPlate: plate,
+    name,
+    maxCapacity,
+    regularPrice,
+    discount,
+    image,
+    features,
+  } = van;
 
   return (
     <TableRow>
