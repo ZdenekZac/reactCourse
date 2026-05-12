@@ -1,13 +1,7 @@
+import { useState } from 'react';
 import styled from 'styled-components';
-
-const Img = styled.img`
-  display: block;
-  width: 6.8rem;
-  aspect-ratio: 3/2;
-  object-fit: cover;
-  transform: scale(1.5);
-  transition: transform 0.3s ease;
-`;
+import { useDeleteVan } from './useDeleteVan';
+import { useCreateVans } from './useCreateVans';
 
 const TableRow = styled.div`
   display: grid;
@@ -19,13 +13,22 @@ const TableRow = styled.div`
   background-color: var(--color-emerald-200);
   border-bottom: 0.5px solid var(--color-grey-100);
 
+  &:not(:last-child) {
+    border-bottom: 1px solid var(--color-grey-100);
+  }
+
   &:hover {
     background-color: var(--color-emerald-400);
-
-    /* ${Img} {
-      transform: scale(1.9) translateX(0.7rem) translateY(-0.4rem);
-    } */
   }
+`;
+
+const Img = styled.img`
+  display: block;
+  width: 6.4rem;
+  aspect-ratio: 3/2;
+  object-fit: cover;
+  transform: scale(1.5);
+  transition: transform 0.3s ease;
 `;
 
 const Van = styled.div`
@@ -35,20 +38,23 @@ const Van = styled.div`
 const Features = styled.div`
   overflow: scroll;
 `;
-const Price = styled.div``;
+const Price = styled.div`
+  font-family: 'Sono';
+`;
 const Discount = styled.div``;
 
 function VanRow({ van }) {
-  const {
-    id: vanId,
-    registrationPlate: plate,
-    name,
-    maxCapacity,
-    regularPrice,
-    discount,
-    image,
-    features,
-  } = van;
+  const [showForm, setShowForm] = useState(false);
+  const { isDeleting, deleteVan } = useDeleteVan();
+  const { isCreating, createVan } = useCreateVans();
+
+  const { id: vanId, registrationPlate: plate, name, maxCapacity, regularPrice, discount, image, features } = van;
+
+  function handleDuplicate() {
+    createVan({
+      name,
+    });
+  }
 
   return (
     <TableRow>
