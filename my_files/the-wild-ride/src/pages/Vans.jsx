@@ -1,12 +1,28 @@
 import Heading from '../ui/Heading';
 import Row from '../ui/Row';
 import VanTable from '../features/vans/VanTable';
+import Button from '../ui/Button';
+import { useState } from 'react';
+import CreateVanForm from '../features/vans/CreateVanForm';
 
 function Vans() {
+  const [showForm, setShowForm] = useState(false);
+
   return (
     <>
-      <Heading as="h1">Vans</Heading>
-      <VanTable />
+      <Row type="horizontal">
+        <Heading as="h1">Vans</Heading>
+        <p>Filter/Sort</p>
+      </Row>
+      <Row type="vertical">
+        <VanTable />
+        <Button
+          $variation="primary"
+          onClick={() => setShowForm((show) => !show)}
+        >
+          Add new Van{' '}
+        </Button>
+      </Row>
     </>
   );
 }
