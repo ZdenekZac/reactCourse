@@ -18,6 +18,7 @@ function Vans() {
         <VanTable />
         <Button
           $variation="primary"
+          $size="medium"
           onClick={() => setShowForm((show) => !show)}
         >
           Add new Van{' '}
