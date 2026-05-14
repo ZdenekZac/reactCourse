@@ -23,6 +23,7 @@ function Vans() {
         >
           Add new Van{' '}
         </Button>
+        {showForm && <CreateVanForm />}
       </Row>
     </>
   );
