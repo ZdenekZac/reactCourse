@@ -15,7 +15,7 @@ const Img = styled.img`
 
 const TableRow = styled.div`
   display: grid;
-  grid-template-columns: 0.6fr 0.6fr 0.6fr 0.8fr 0.6fr 0.6fr minmax(0, 1fr);
+  grid-template-columns: 0.6fr 0.6fr 0.6fr 0.6fr 0.6fr 0.6fr 1fr;
   column-gap: 2.4rem;
   height: 6rem;
   align-items: center;
@@ -87,7 +87,7 @@ function VanRow({ van }) {
       <Img src={image} />
       <Van>{name}</Van>
       <Van>{plate}</Van>
-      <div>Fits up to {maxCapacity} guests</div>
+      <div>{maxCapacity}</div>
       <Price>{regularPrice} / day</Price>
       <Discount>{discount}</Discount>
       <Features>{features}</Features>

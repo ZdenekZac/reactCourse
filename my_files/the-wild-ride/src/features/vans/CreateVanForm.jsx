@@ -62,11 +62,66 @@ function CreateVanForm({ vanToEdit = {} }) {
           })}
         />
       </FormRow>
+
+      <FormRow label="Reg. plate" error={errors?.name?.message}>
+        <Input
+          type="text"
+          id="registrationPlate"
+          disabled={isWorking}
+          {...register('registrationPlate', {
+            required: 'This field is required!!',
+          })}
+        />
+      </FormRow>
+      <FormRow label="Capacity" error={errors?.name?.message}>
+        <Input
+          type="number"
+          id="maxCapacity"
+          disabled={isWorking}
+          {...register('maxCapacity', {
+            required: 'This field is required!!',
+          })}
+        />
+      </FormRow>
+
+      <FormRow label="Price" error={errors?.name?.message}>
+        <Input
+          type="text"
+          id="regularPrice"
+          disabled={isWorking}
+          {...register('regularPrice', {
+            required: 'This field is required!!',
+          })}
+        />
+      </FormRow>
+
+      <FormRow label="Discount" error={errors?.name?.message}>
+        <Input
+          type="number"
+          id="discount"
+          disabled={isWorking}
+          {...register('discount', {
+            required: 'This field is required!!',
+          })}
+        />
+      </FormRow>
+
+      <FormRow label="Features" error={errors?.name?.message}>
+        <Input
+          type="text"
+          id="features"
+          disabled={isWorking}
+          {...register('features', {
+            required: 'This field is required!!',
+          })}
+        />
+      </FormRow>
+
       <FormRow label="Cabin photo" error={errors?.image?.message}>
         <FileInput
           id="image"
           accept="image/*"
-          {...register('description', {
+          {...register('image', {
             required: 'this field is required !!',
           })}
         ></FileInput>
