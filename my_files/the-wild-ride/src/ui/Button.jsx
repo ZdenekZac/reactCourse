@@ -24,17 +24,29 @@ const sizes = {
 
 const variations = {
   primary: css`
-    color: var(--color-emerald-400);
+    color: var(--color-emerald-600);
     background-color: var(--color-amber-400);
+    border: 1px solid var(--color-grey-400);
 
     &:hover {
       background-color: var(--color-amber-200);
     }
   `,
   secondary: css`
-    color: var(--color-grey-600);
-    background: var(--color-grey-0);
-    border: 1px solid var(--color-grey-200);
+    color: var(--color-emerald-600);
+    background-color: var(--color-amber-400);
+    border: 1px solid var(--color-grey-400);
+    padding: 0.6rem;
+
+    &:hover {
+      background-color: var(--color-amber-200);
+    }
+  `,
+  third: css`
+    color: var(--color-emerald-600);
+    background-color: var(--color-grey-200);
+    border: 1px solid var(--color-grey-400);
+    padding: 0.6rem;
 
     &:hover {
       background-color: var(--color-grey-50);

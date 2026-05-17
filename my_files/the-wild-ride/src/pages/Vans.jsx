@@ -10,21 +10,17 @@ function Vans() {
 
   return (
     <>
-      <Row type="horizontal">
-        <Heading as="h1">Vans</Heading>
+      <Row type='horizontal'>
+        <Heading as='h1'>Vans</Heading>
         <p>Filter/Sort</p>
       </Row>
-      <Row type="vertical">
+      <Row type='vertical'>
         <VanTable />
-        <Button
-          $variation="primary"
-          $size="medium"
-          onClick={() => setShowForm((show) => !show)}
-        >
+        <Button $variation='primary' $size='medium' onClick={() => setShowForm((show) => !show)}>
           Add new Van{' '}
         </Button>
-        {showForm && <CreateVanForm />}
       </Row>
+      {showForm && <CreateVanForm />}
     </>
   );
 }

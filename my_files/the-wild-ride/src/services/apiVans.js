@@ -5,30 +5,37 @@ export async function getVans() {
   const { data, error } = await supabase.from('vans').select('*');
   if (error) {
     console.error(error);
-    throw new Error('cabins could not be loaded :( ');
+    throw new Error('vans could not be loaded :( ');
   }
   return data;
 }
 
 export async function createEditVan(newVan, id) {
+  console.log('DEBUG - Co přichází do API:', { newVan, id });
   const hasImagePath = newVan.image?.startsWith?.(supabaseUrl);
   const imageName = `${Math.random()}-${newVan.image.name}`.replace('/', '');
-  const imagePath = hasImagePath ? newVan.image : `${supabaseUrl}/storage/v1/object/public/van-images/${imageName}`;
+  const imagePath = hasImagePath ? newVan.image : `${supabaseUrl}/storage/v1/object/public/vans-images/${imageName}`;
 
   //1. Create/Edit van
   let query = supabase.from('vans');
 
   //A - create
-  if (!id) query = query.insert([{ ...newVan, image: imagePath }]);
+  if (!id) {
+    query = query.insert([{ ...newVan, image: imagePath }]);
+    console.log('Provádím CREATE s těmito daty:', { id, typeofId: typeof id, newVan });
+  }
 
   //B - edit
-  if (id) query = query.update({ ...newVan, image: imagePath }).eq('id', id);
+  if (id) {
+    query = query.update({ ...newVan, image: imagePath }).eq('id', id);
+    console.log('Provádím EDIT s těmito daty:', { id, typeofId: typeof id, newVan });
+  }
 
   const { data, error } = await query.select().single();
 
   if (error) {
     console.error(error);
-    throw new Error('cabin could not be created :(');
+    throw new Error('van could not be created :(');
   }
 
   // 2. upload image
@@ -40,7 +47,7 @@ export async function createEditVan(newVan, id) {
   if (storageError) {
     await supabase.from('vans').delete().eq('id', data.id);
     console.error(storageError);
-    throw new Error('cabin image could not be uploaded and the cabin was not created :(');
+    throw new Error('van image could not be uploaded and the van was not created :(');
   }
 
   return data;
@@ -48,12 +55,12 @@ export async function createEditVan(newVan, id) {
 
 export async function deleteVan(id) {
   try {
-    const { data, error } = await supabase.from('cabins').delete().eq('id', id);
+    const { data, error } = await supabase.from('vans').delete().eq('id', id);
 
     //1. error from supabase, i.e. RLS policy
     if (error) {
       console.error('supabase error:', error);
-      throw new Error('Cabins could not be deleted');
+      throw new Error('vans could not be deleted');
     }
 
     return data;

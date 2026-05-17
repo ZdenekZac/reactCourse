@@ -9,11 +9,9 @@ export function useEditVan() {
     mutationFn: ({ newVanData, id }) => createEditVan(newVanData, id),
     onSuccess: () => {
       toast.success('Van successfully edited!');
-      queryClient.invalidateQueries({ queryKey: ['cabins'] });
+      queryClient.invalidateQueries({ queryKey: ['vans'] });
     },
     onError: (err) => toast.error(err.message),
   });
   return { isEditing, editVan };
 }
-
-export default useEditVan;

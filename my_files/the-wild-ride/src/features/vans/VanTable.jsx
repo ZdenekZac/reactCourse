@@ -14,7 +14,7 @@ const Table = styled.div`
 
 const TableHeader = styled.header`
   display: grid;
-  grid-template-columns: 0.6fr 0.6fr 0.6fr 0.6fr 0.6fr 0.6fr 1fr;
+  grid-template-columns: 0.6fr 0.6fr 0.6fr 0.6fr 0.6fr 0.6fr 1fr 1fr;
   column-gap: 2.4rem;
   align-items: center;
 
@@ -29,12 +29,13 @@ const TableHeader = styled.header`
 
 function VanTable() {
   const { isLoading, vans } = useVans();
+
   if (isLoading) return <Spinner />;
 
   return (
     <>
-      <Table role="table">
-        <TableHeader role="row">
+      <Table role='table'>
+        <TableHeader role='row'>
           <div>img</div>
           <div>Van</div>
           <div>Plate</div>
@@ -42,6 +43,7 @@ function VanTable() {
           <div>Price</div>
           <div>Discount</div>
           <div>Features</div>
+          <div></div>
         </TableHeader>
         {vans.map((van) => (
           <VanRow van={van} key={van.id} />

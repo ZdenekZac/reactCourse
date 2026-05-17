@@ -1,7 +1,10 @@
 import styled from 'styled-components';
+import { useState } from 'react';
+
+import CreateVanForm from './CreateVanForm';
 import { useDeleteVan } from './useDeleteVan';
 import { useCreateVans } from './useCreateVans';
-import { useState } from 'react';
+import { HiPencil, HiSquare2Stack, HiTrash } from 'react-icons/hi2';
 
 const Img = styled.img`
   display: block;
@@ -15,7 +18,7 @@ const Img = styled.img`
 
 const TableRow = styled.div`
   display: grid;
-  grid-template-columns: 0.6fr 0.6fr 0.6fr 0.6fr 0.6fr 0.6fr 1fr;
+  grid-template-columns: 0.6fr 0.6fr 0.6fr 0.6fr 0.6fr 0.6fr 1fr 1fr;
   column-gap: 2.4rem;
   height: 6rem;
   align-items: center;
@@ -67,31 +70,47 @@ const Price = styled.div``;
 const Discount = styled.div``;
 
 function VanRow({ van }) {
-  const { showForm, setShowForm } = useState(false);
+  const [showForm, setShowForm] = useState(false);
   const { isDeleting, deleteVan } = useDeleteVan();
   const { isCreating, createVan } = useCreateVans();
 
-  const {
-    id: vanId,
-    registrationPlate: plate,
-    name,
-    maxCapacity,
-    regularPrice,
-    discount,
-    image,
-    features,
-  } = van;
+  const { id: vanId, registrationPlate: plate, name, maxCapacity, regularPrice, discount, image, features } = van;
+
+  function handleDuplicate() {
+    createVan({
+      name: `Copy of ${name}`,
+      maxCapacity,
+      regularPrice,
+      discount,
+      image,
+      features,
+    });
+  }
 
   return (
-    <TableRow>
-      <Img src={image} />
-      <Van>{name}</Van>
-      <Van>{plate}</Van>
-      <div>{maxCapacity}</div>
-      <Price>{regularPrice} / day</Price>
-      <Discount>{discount}</Discount>
-      <Features>{features}</Features>
-    </TableRow>
+    <>
+      <TableRow role='row'>
+        <Img src={image} />
+        <Van>{name}</Van>
+        <Van>{plate}</Van>
+        <div>{maxCapacity}</div>
+        <Price>{regularPrice} / day</Price>
+        <Discount>{discount}</Discount>
+        <Features>{features}</Features>
+        <div>
+          <button disabled={isCreating} onClick={handleDuplicate}>
+            <HiSquare2Stack />
+          </button>
+          <button onClick={() => setShowForm((show) => !show)}>
+            <HiPencil />
+          </button>
+          <button onClick={() => deleteVan(vanId)} disabled={isDeleting}>
+            <HiTrash />
+          </button>
+        </div>
+      </TableRow>
+      {showForm && <CreateVanForm vanToEdit={van} />}
+    </>
   );
 }
 
