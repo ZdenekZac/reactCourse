@@ -1,4 +1,3 @@
-import { CgEditBlackPoint } from 'react-icons/cg';
 import supabase, { supabaseUrl } from './supabase';
 
 export async function getVans() {

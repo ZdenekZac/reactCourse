@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { deleteVan as deleteVanApi } from '../../services/apiVans';
-import toast from 'react-hot-toast';
+import { toast } from 'react-hot-toast';
 
 export function useDeleteVan() {
   const queryClient = useQueryClient();

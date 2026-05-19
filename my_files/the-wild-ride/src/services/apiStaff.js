@@ -2,7 +2,6 @@ import supabase from './supabase';
 
 export async function getStaff() {
   const { data, error } = await supabase.from('staff').select('*');
-  console.log(data);
 
   if (error) {
     console.error(error);
@@ -10,4 +9,11 @@ export async function getStaff() {
   }
 
   return data;
+}
+
+export async function createEditStaff(newStaff, id) {
+  console.log('newStaff, id --> ', newStaff, id);
+  let query = supabase.from('staff');
+
+  console.log(query);
 }
