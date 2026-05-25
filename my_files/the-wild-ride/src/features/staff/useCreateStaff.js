@@ -7,6 +7,11 @@ export function useCreateStaff() {
 
   const { mutate: createStaff, isPending: isCreating } = useMutation({
     mutationFn: createEditStaff,
+    onSuccess: () => {
+      toast.success('New staff successfully created!');
+      queryClient.invalidateQueries({ queryKey: ['staff'] });
+    },
+    onError: (err) => toast.error(err.message),
   });
 
   return { isCreating, createStaff };

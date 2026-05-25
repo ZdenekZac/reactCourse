@@ -10,6 +10,8 @@ import { useForm } from 'react-hook-form';
 
 function CreateStaffForm({ staffToEdit = {} }) {
   const { register, handleSubmit, reset, getValues, formState } = useForm();
+
+  const { errors } = formState;
   const { id: editId, ...editValues } = staffToEdit;
   const { isCreating, createStaff } = useCreateStaff();
   const isEditSession = Boolean(editId);
@@ -20,13 +22,24 @@ function CreateStaffForm({ staffToEdit = {} }) {
     if (isEditSession) {
       console.log('edit');
     } else {
-      createStaff({ ...data });
+      createStaff(
+        { ...data },
+        {
+          onSuccess: (data) => {
+            reset();
+          },
+        },
+      );
     }
   }
 
+  function onError(errors) {
+    console.log(errors);
+  }
+
   return (
-    <Form onSubmit={handleSubmit(myOnSubmit)}>
-      <FormRow label='Full name'>
+    <Form onSubmit={handleSubmit(myOnSubmit, onError)}>
+      <FormRow label='Full name' error={errors?.name?.message}>
         <Input
           type='text'
           id='name'
@@ -36,7 +49,7 @@ function CreateStaffForm({ staffToEdit = {} }) {
           })}
         />
       </FormRow>
-      <FormRow label='Email'>
+      <FormRow label='Email' error={errors?.email?.message}>
         <Input
           type='text'
           id='email'
@@ -46,21 +59,23 @@ function CreateStaffForm({ staffToEdit = {} }) {
           })}
         />
       </FormRow>
-      <FormRow label='Phone'>
+      <FormRow label='Phone' error={errors?.phone?.message}>
         <Input
           type='text'
           id='phone'
           disabled={isWorking}
-          {...register('name', {
+          {...register('phone', {
             required: 'this field is required!',
           })}
         />
       </FormRow>
       <FormRow>
-        <Button variation='secondary' type='reset'>
+        <Button $variation='third' type='reset'>
           Cancel
         </Button>
-        <Button disabled={isWorking}>{isEditSession ? 'Edit cabin' : 'Create new cabin'}</Button>
+        <Button $variation='secondary' disabled={isWorking}>
+          {isEditSession ? 'Edit cabin' : 'Create new cabin'}
+        </Button>
       </FormRow>
     </Form>
   );

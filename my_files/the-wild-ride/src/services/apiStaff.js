@@ -13,7 +13,13 @@ export async function getStaff() {
 
 export async function createEditStaff(newStaff, id) {
   console.log('newStaff, id --> ', newStaff, id);
+
   let query = supabase.from('staff');
+
+  if (!id) {
+    query = query.insert([{ ...newStaff }]);
+    console.log('CREATING: ', { id, typeofId: typeof id, newStaff });
+  }
 
   console.log(query);
 }
