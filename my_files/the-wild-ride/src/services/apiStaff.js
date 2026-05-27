@@ -21,5 +21,13 @@ export async function createEditStaff(newStaff, id) {
     console.log('CREATING: ', { id, typeofId: typeof id, newStaff });
   }
 
-  console.log(query);
+  const { data, error } = await query.select().single();
+
+  if (error) {
+    console.error(error);
+    throw new Error('cabin could not be created :(');
+  }
+
+  console.log(data);
+  return data;
 }

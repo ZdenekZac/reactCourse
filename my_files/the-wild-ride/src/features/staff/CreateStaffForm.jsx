@@ -28,7 +28,7 @@ function CreateStaffForm({ staffToEdit = {} }) {
           onSuccess: (data) => {
             reset();
           },
-        },
+        }
       );
     }
   }
@@ -39,30 +39,30 @@ function CreateStaffForm({ staffToEdit = {} }) {
 
   return (
     <Form onSubmit={handleSubmit(myOnSubmit, onError)}>
-      <FormRow label='Full name' error={errors?.name?.message}>
+      <FormRow label="Full name" error={errors?.fullName?.message}>
         <Input
-          type='text'
-          id='name'
+          type="text"
+          id="name"
           disabled={isWorking}
-          {...register('name', {
+          {...register('fullName', {
             required: 'this field is required!',
           })}
         />
       </FormRow>
-      <FormRow label='Email' error={errors?.email?.message}>
+      <FormRow label="Email" error={errors?.email?.message}>
         <Input
-          type='text'
-          id='email'
+          type="text"
+          id="email"
           disabled={isWorking}
           {...register('email', {
             required: 'this field is required!',
           })}
         />
       </FormRow>
-      <FormRow label='Phone' error={errors?.phone?.message}>
+      <FormRow label="Phone" error={errors?.phone?.message}>
         <Input
-          type='text'
-          id='phone'
+          type="text"
+          id="phone"
           disabled={isWorking}
           {...register('phone', {
             required: 'this field is required!',
@@ -70,10 +70,10 @@ function CreateStaffForm({ staffToEdit = {} }) {
         />
       </FormRow>
       <FormRow>
-        <Button $variation='third' type='reset'>
+        <Button $variation="third" type="reset">
           Cancel
         </Button>
-        <Button $variation='secondary' disabled={isWorking}>
+        <Button $variation="secondary" disabled={isWorking}>
           {isEditSession ? 'Edit cabin' : 'Create new cabin'}
         </Button>
       </FormRow>
