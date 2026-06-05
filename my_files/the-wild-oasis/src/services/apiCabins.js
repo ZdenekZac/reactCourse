@@ -21,6 +21,7 @@ export async function getCabins() {
 // }
 
 export async function createEditCabin(newCabin, id) {
+  console.log('DEBUG - Co přichází do API:', { newCabin, id });
   const hasImagePath = newCabin.image?.startsWith?.(supabaseUrl);
 
   const imageName = `${Math.random()}-${newCabin.image.name}`.replace('/', '');
@@ -30,10 +31,16 @@ export async function createEditCabin(newCabin, id) {
   let query = supabase.from('cabins');
 
   // A) CREATE
-  if (!id) query = query.insert([{ ...newCabin, image: imagePath }]);
-
+  if (!id) {
+    query = query.insert([{ ...newCabin, image: imagePath }]);
+    console.log('Provádím CREATE s těmito daty:', { id, typeofId: typeof id, newCabin });
+  }
+  console.log(query);
   // B) EDIT
-  if (id) query = query.update({ ...newCabin, image: imagePath }).eq('id', id);
+  if (id) {
+    query = query.update({ ...newCabin, image: imagePath }).eq('id', id);
+    console.log('Provádím EDIT s těmito daty:', { id, typeofId: typeof id, newCabin });
+  }
 
   const { data, error } = await query.select().single();
 
