@@ -6,7 +6,7 @@ export function useCreateStaff() {
   const queryClient = useQueryClient();
 
   const { mutate: createStaff, isPending: isCreating } = useMutation({
-    mutationFn: createEditStaff,
+    mutationFn: (data) => createEditStaff(data),
     onSuccess: () => {
       toast.success('New staff successfully created!');
       queryClient.invalidateQueries({ queryKey: ['staff'] });
