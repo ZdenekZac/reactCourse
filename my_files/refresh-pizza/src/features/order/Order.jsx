@@ -25,7 +25,7 @@ function Order() {
         <h2 className='text-xl font-semibold'>Order #{id} status</h2>
         <div className='space-x-2'>
           {priority && (
-            <span className='rouded-full bg-red-500 px-3 py-1 text-sm font-semibold uppercase tracking-wide text-red-50'>
+            <span className='rounded-full bg-red-500 px-3 py-1 text-sm font-semibold uppercase tracking-wide text-red-50'>
               Priority
             </span>
           )}
