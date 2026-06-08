@@ -33,7 +33,7 @@ function CreateCabinForm({ cabinToEdit = {} }) {
           onSuccess: (data) => {
             reset();
           },
-        },
+        }
       );
     else
       createCabin(
@@ -42,7 +42,7 @@ function CreateCabinForm({ cabinToEdit = {} }) {
           onSuccess: (data) => {
             reset();
           },
-        },
+        }
       );
   }
 
@@ -51,10 +51,10 @@ function CreateCabinForm({ cabinToEdit = {} }) {
   }
   return (
     <Form onSubmit={handleSubmit(onSubmit, onError)}>
-      <FormRow label='Cabin name' error={errors?.name?.message}>
+      <FormRow label="Cabin name" error={errors?.name?.message}>
         <Input
-          type='text'
-          id='name'
+          type="text"
+          id="name"
           disabled={isWorking}
           {...register('name', {
             required: 'This field is required!!',
@@ -62,10 +62,10 @@ function CreateCabinForm({ cabinToEdit = {} }) {
         />
       </FormRow>
 
-      <FormRow label='Max capacity' error={errors?.maxCapacity?.message}>
+      <FormRow label="Max capacity" error={errors?.maxCapacity?.message}>
         <Input
-          type='number'
-          id='maxCapacity'
+          type="number"
+          id="maxCapacity"
           disabled={isWorking}
           {...register('maxCapacity', {
             required: 'This field is required!!',
@@ -77,10 +77,10 @@ function CreateCabinForm({ cabinToEdit = {} }) {
         />
       </FormRow>
 
-      <FormRow label='Regular price' error={errors?.regularPrice?.message}>
+      <FormRow label="Regular price" error={errors?.regularPrice?.message}>
         <Input
-          type='number'
-          id='regularPrice'
+          type="number"
+          id="regularPrice"
           disabled={isWorking}
           {...register('regularPrice', {
             required: 'This field is required!!',
@@ -92,26 +92,30 @@ function CreateCabinForm({ cabinToEdit = {} }) {
         />
       </FormRow>
 
-      <FormRow label='Discount' error={errors?.discount?.message}>
+      <FormRow label="Discount" error={errors?.discount?.message}>
         <Input
-          type='number'
-          id='discount'
+          type="number"
+          id="discount"
           disabled={isWorking}
           defaultValue={0}
           {...register('discount', {
             required: 'This field is required!!',
             valueAsNumber: true,
             validate: (value) =>
-              value <= Number(getValues().regularPrice) || 'Discount should be less than regular price',
+              value <= Number(getValues().regularPrice) ||
+              'Discount should be less than regular price',
           })}
         />
       </FormRow>
 
-      <FormRow label='Description for website' error={errors?.description?.message}>
+      <FormRow
+        label="Description for website"
+        error={errors?.description?.message}
+      >
         <Textarea
-          type='text'
-          id='description'
-          defaultValue=''
+          type="text"
+          id="description"
+          defaultValue=""
           disabled={isWorking}
           {...register('description', {
             required: 'This field is required!!',
@@ -119,10 +123,10 @@ function CreateCabinForm({ cabinToEdit = {} }) {
         />
       </FormRow>
 
-      <FormRow label='Cabin photo' error={errors?.image?.message}>
+      <FormRow label="Cabin photo" error={errors?.image?.message}>
         <FileInput
-          id='image'
-          accept='image/*'
+          id="image"
+          accept="image/*"
           {...register('image', {
             required: isEditSession ? false : 'This field is required!!',
           })}
@@ -131,10 +135,12 @@ function CreateCabinForm({ cabinToEdit = {} }) {
 
       <FormRow>
         {/* type is an HTML attribute! */}
-        <Button variation='secondary' type='reset'>
+        <Button variation="secondary" type="reset">
           Cancel
         </Button>
-        <Button disabled={isWorking}>{isEditSession ? 'Edit cabin' : 'Create new cabin'}</Button>
+        <Button disabled={isWorking}>
+          {isEditSession ? 'Edit cabin' : 'Create new cabin'}
+        </Button>
       </FormRow>
     </Form>
   );
