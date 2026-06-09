@@ -94,7 +94,6 @@ function CreateOrder() {
                 onClick={(e) => {
                   e.preventDefault();
                   dispatch(fetchAddress());
-                  console.log(address);
                 }}
               >
                 Get position
@@ -113,7 +112,7 @@ function CreateOrder() {
             onChange={(e) => setWithPriority(e.target.checked)}
           />
           <label htmlFor='priority' className='font-medium'>
-            Want to yo give your order priority?
+            Want to give your order priority?
           </label>
         </div>
 
