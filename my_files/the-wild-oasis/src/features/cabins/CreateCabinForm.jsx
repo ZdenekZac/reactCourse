@@ -9,7 +9,7 @@ import { useForm } from 'react-hook-form';
 import { useCreateCabin } from './useCreateCabin';
 import { useEditCabin } from './useEditCabin';
 
-function CreateCabinForm({ cabinToEdit = {}, onCloseModal }) {
+function CreateCabinForm({ cabinToEdit = {} }) {
   const { id: editId, ...editValues } = cabinToEdit;
   const isEditSession = Boolean(editId);
 
@@ -32,7 +32,6 @@ function CreateCabinForm({ cabinToEdit = {}, onCloseModal }) {
         {
           onSuccess: (data) => {
             reset();
-            onCloseModal?.();
           },
         }
       );
@@ -42,7 +41,6 @@ function CreateCabinForm({ cabinToEdit = {}, onCloseModal }) {
         {
           onSuccess: (data) => {
             reset();
-            onCloseModal?.();
           },
         }
       );
@@ -52,13 +50,8 @@ function CreateCabinForm({ cabinToEdit = {}, onCloseModal }) {
     console.log(errors);
   }
   return (
-<<<<<<< HEAD
     <Form onSubmit={handleSubmit(onSubmit, onError)}>
       <FormRow label="Cabin name" error={errors?.name?.message}>
-=======
-    <Form onSubmit={handleSubmit(onSubmit, onError)} type={onCloseModal ? 'modal' : 'regular'}>
-      <FormRow label='Cabin name' error={errors?.name?.message}>
->>>>>>> ae772bfdb4dcbebabd2a297cb8c6855b53924ddc
         <Input
           type="text"
           id="name"
@@ -142,11 +135,7 @@ function CreateCabinForm({ cabinToEdit = {}, onCloseModal }) {
 
       <FormRow>
         {/* type is an HTML attribute! */}
-<<<<<<< HEAD
         <Button variation="secondary" type="reset">
-=======
-        <Button variation='secondary' type='reset' onClick={() => onCloseModal?.()}>
->>>>>>> ae772bfdb4dcbebabd2a297cb8c6855b53924ddc
           Cancel
         </Button>
         <Button disabled={isWorking}>
