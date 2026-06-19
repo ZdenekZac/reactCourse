@@ -28,7 +28,7 @@ function CreateStaffForm({ staffToEdit = {} }) {
       createStaff(
         { ...data },
         {
-          onSuccess: (data) => {
+          onSuccess: () => {
             reset();
           },
         },

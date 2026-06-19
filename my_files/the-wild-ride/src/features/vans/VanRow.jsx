@@ -5,6 +5,8 @@ import CreateVanForm from './CreateVanForm';
 import { useDeleteVan } from './useDeleteVan';
 import { useCreateVans } from './useCreateVans';
 import { HiPencil, HiSquare2Stack, HiTrash } from 'react-icons/hi2';
+import Modal from '../../ui/Modal';
+import ConfirmDelete from '../../ui/ConfirmDelete';
 
 const Img = styled.img`
   display: block;
@@ -74,7 +76,16 @@ function VanRow({ van }) {
   const { isDeleting, deleteVan } = useDeleteVan();
   const { isCreating, createVan } = useCreateVans();
 
-  const { id: vanId, registrationPlate: plate, name, maxCapacity, regularPrice, discount, image, features } = van;
+  const {
+    id: vanId,
+    registrationPlate: plate,
+    name,
+    maxCapacity,
+    regularPrice,
+    discount,
+    image,
+    features,
+  } = van;
 
   function handleDuplicate() {
     createVan({
@@ -89,7 +100,7 @@ function VanRow({ van }) {
 
   return (
     <>
-      <TableRow role='row'>
+      <TableRow role="row">
         <Img src={image} />
         <Van>{name}</Van>
         <Van>{plate}</Van>
