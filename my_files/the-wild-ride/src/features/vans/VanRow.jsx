@@ -7,6 +7,8 @@ import { useCreateVans } from './useCreateVans';
 import { HiPencil, HiSquare2Stack, HiTrash } from 'react-icons/hi2';
 import Modal from '../../ui/Modal';
 import ConfirmDelete from '../../ui/ConfirmDelete';
+import Table from '../../ui/Table';
+import Menus from '../../ui/Menus';
 
 const Img = styled.img`
   display: block;
@@ -72,10 +74,9 @@ const Price = styled.div``;
 const Discount = styled.div``;
 
 function VanRow({ van }) {
-  const [showForm, setShowForm] = useState(false);
   const { isDeleting, deleteVan } = useDeleteVan();
   const { isCreating, createVan } = useCreateVans();
-
+  console.log(van);
   const {
     id: vanId,
     registrationPlate: plate,
@@ -99,29 +100,48 @@ function VanRow({ van }) {
   }
 
   return (
-    <>
-      <TableRow role="row">
-        <Img src={image} />
-        <Van>{name}</Van>
-        <Van>{plate}</Van>
-        <div>{maxCapacity}</div>
-        <Price>{regularPrice} / day</Price>
-        <Discount>{discount}</Discount>
-        <Features>{features}</Features>
-        <div>
-          <button disabled={isCreating} onClick={handleDuplicate}>
-            <HiSquare2Stack />
-          </button>
-          <button onClick={() => setShowForm((show) => !show)}>
-            <HiPencil />
-          </button>
-          <button onClick={() => deleteVan(vanId)} disabled={isDeleting}>
-            <HiTrash />
-          </button>
-        </div>
-      </TableRow>
-      {showForm && <CreateVanForm vanToEdit={van} />}
-    </>
+    <Table.Row>
+      <Img src={image} />
+      <Van>{name}</Van>
+      <Van>{plate}</Van>
+      <div>{maxCapacity}</div>
+      <Price>{regularPrice} / day</Price>
+      <Discount>{discount}</Discount>
+      <Features>{features}</Features>
+      <div>
+        <Modal>
+          <Menus.Menu>
+            <Menus.Toggle id={vanId} />
+
+            <Menus.List id={vanId}>
+              <Menus.Button icon={<HiSquare2Stack />} onClick={handleDuplicate}>
+                Duplicate
+              </Menus.Button>
+
+              <Modal.Open opens="edit">
+                <Menus.Button icon={<HiPencil />}>Edit</Menus.Button>
+              </Modal.Open>
+
+              <Modal.Open opens="delete">
+                <Menus.Button icon={<HiTrash />}>Delete</Menus.Button>
+              </Modal.Open>
+            </Menus.List>
+
+            <Modal.Window name="edit">
+              <CreateVanForm vansToEdit={van} />
+            </Modal.Window>
+
+            <Modal.Window name="delete">
+              <ConfirmDelete
+                resourceName="vans"
+                disabled={isDeleting}
+                onConfirm={() => deleteVan(vanId)}
+              />
+            </Modal.Window>
+          </Menus.Menu>
+        </Modal>
+      </div>
+    </Table.Row>
   );
 }
 

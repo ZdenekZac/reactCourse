@@ -2,40 +2,31 @@ import styled from 'styled-components';
 import VanRow from './VanRow';
 import Spinner from '../../ui/Spinner';
 import { useVans } from './useVans';
-
-const Table = styled.div`
-  border: 1px solid var(--color-grey-200);
-
-  font-size: 1.4rem;
-  background-color: var(--color-grey-0);
-  border-radius: 7px;
-  overflow: hidden;
-`;
-
-const TableHeader = styled.header`
-  display: grid;
-  grid-template-columns: 0.6fr 0.6fr 0.6fr 0.6fr 0.6fr 0.6fr 1fr 1fr;
-  column-gap: 2.4rem;
-  align-items: center;
-
-  background-color: var(--color-grey-50);
-  border-bottom: 1px solid var(--color-grey-100);
-  text-transform: uppercase;
-  letter-spacing: 0.4px;
-  font-weight: 600;
-  color: var(--color-grey-600);
-  padding: 1.6rem 2.4rem;
-`;
+import Menus from '../../ui/Menus';
+import { useSearchParams } from 'react-router-dom';
+import Table from '../../ui/Table';
 
 function VanTable() {
   const { isLoading, vans } = useVans();
+  const [searchParams] = useSearchParams();
 
   if (isLoading) return <Spinner />;
 
+  const filterValue = searchParams.get('discount') || 'all';
+
+  let filteredVans;
+  if (filterValue === 'all') filteredVans = vans;
+  if (filterValue === 'no-discount') {
+    filteredVans = vans.filter((van) => van.discount === 0);
+  }
+  if (filterValue === 'with-discount') {
+    filteredVans = vans.filter((van) => van.discount > 0);
+  }
+
   return (
-    <>
-      <Table role='table'>
-        <TableHeader role='row'>
+    <Menus>
+      <Table columns=" 0.6fr 0.6fr 0.6fr 0.6fr 0.6fr 0.6fr 1fr 1fr">
+        <Table.Header>
           <div>img</div>
           <div>Van</div>
           <div>Plate</div>
@@ -44,12 +35,13 @@ function VanTable() {
           <div>Discount</div>
           <div>Features</div>
           <div></div>
-        </TableHeader>
-        {vans.map((van) => (
-          <VanRow van={van} key={van.id} />
-        ))}
+        </Table.Header>
+        <Table.Body
+          data={filteredVans}
+          render={(van) => <VanRow van={van} key={van.id} />}
+        />
       </Table>
-    </>
+    </Menus>
   );
 }
 

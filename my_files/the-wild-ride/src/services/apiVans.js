@@ -9,11 +9,13 @@ export async function getVans() {
   return data;
 }
 
-export async function createEditVan(newVan, id) {
+export async function createEditVan({ newVan, id }) {
   console.log('DEBUG - Co přichází do API:', { newVan, id });
   const hasImagePath = newVan.image?.startsWith?.(supabaseUrl);
   const imageName = `${Math.random()}-${newVan.image.name}`.replace('/', '');
-  const imagePath = hasImagePath ? newVan.image : `${supabaseUrl}/storage/v1/object/public/vans-images/${imageName}`;
+  const imagePath = hasImagePath
+    ? newVan.image
+    : `${supabaseUrl}/storage/v1/object/public/vans-images/${imageName}`;
 
   //1. Create/Edit van
   let query = supabase.from('vans');
@@ -21,13 +23,21 @@ export async function createEditVan(newVan, id) {
   //A - create
   if (!id) {
     query = query.insert([{ ...newVan, image: imagePath }]);
-    console.log('Provádím CREATE s těmito daty:', { id, typeofId: typeof id, newVan });
+    console.log('Provádím CREATE s těmito daty:', {
+      id,
+      typeofId: typeof id,
+      newVan,
+    });
   }
 
   //B - edit
   if (id) {
     query = query.update({ ...newVan, image: imagePath }).eq('id', id);
-    console.log('Provádím EDIT s těmito daty:', { id, typeofId: typeof id, newVan });
+    console.log('Provádím EDIT s těmito daty:', {
+      id,
+      typeofId: typeof id,
+      newVan,
+    });
   }
 
   const { data, error } = await query.select().single();
@@ -40,13 +50,17 @@ export async function createEditVan(newVan, id) {
   // 2. upload image
   if (hasImagePath) return data;
 
-  const { error: storageError } = await supabase.storage.from('vans-images').upload(imageName, newVan.image);
+  const { error: storageError } = await supabase.storage
+    .from('vans-images')
+    .upload(imageName, newVan.image);
 
   // 3. delete the cabin IF there was an error uploading image
   if (storageError) {
     await supabase.from('vans').delete().eq('id', data.id);
     console.error(storageError);
-    throw new Error('van image could not be uploaded and the van was not created :(');
+    throw new Error(
+      'van image could not be uploaded and the van was not created :('
+    );
   }
 
   return data;
