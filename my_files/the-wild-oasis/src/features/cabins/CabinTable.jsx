@@ -4,12 +4,15 @@ import { useCabins } from './useCabins';
 import Table from '../../ui/Table';
 import Menus from '../../ui/Menus';
 import { useSearchParams } from 'react-router-dom';
+import Empty from '../../ui/Empty';
 
 function CabinTable() {
   const { isLoading, cabins } = useCabins();
   const [searchParams] = useSearchParams();
 
   if (isLoading) return <Spinner />;
+
+  if (!cabins.length) return <Empty resourceName="cabins" />;
 
   // 1. filter
   const filterValue = searchParams.get('discount') || 'all';
@@ -27,24 +30,36 @@ function CabinTable() {
   const sortBy = searchParams.get('sortBy') || 'startDate-asc';
   const [field, direction] = sortBy.split('-');
   const modifier = direction === 'asc' ? 1 : -1;
-
-  const sortedCabins = filteredCabins.sort((a, b) => {
+  const sortedCabins = [...filteredCabins].sort((a, b) => {
+    // Pokud narazíš na text (name), seřaď ho abecedně
     if (typeof a[field] === 'string') {
       return a[field].localeCompare(b[field]) * modifier;
     }
+    // Pokud jsou to čísla (cena, kapacita, discount), normálně je odečti
     return (a[field] - b[field]) * modifier;
   });
 
+  // const sortedCabins = [...filteredCabins].sort((a, b) => {
+  //   // 🔍 KONTROLA: Vypíšeme si, co přesně se JS snaží porovnat
+  //   console.log('Řadím podle pole:', field);
+  //   console.log('Hodnota A:', a[field], 'Typ:', typeof a[field]);
+  //   console.log('Hodnota B:', b[field], 'Typ:', typeof b[field]);
+
+  //   if (typeof a[field] === 'string') {
+  //     return a[field].localeCompare(b[field]) * modifier;
+  //   }
+  //   return (a[field] - b[field]) * modifier;
+  // });
+
   return (
     <Menus>
-      <Table $columns='0.6fr 1.8fr 2.2fr 1fr 1fr 1fr'>
+      <Table $columns="0.6fr 1.8fr 2.2fr 1fr 1fr 1fr">
         <Table.Header>
           <div></div>
           <div>Cabin</div>
           <div>Capacity</div>
           <div>Price</div>
           <div>Discount</div>
-          <div></div>
           <div></div>
         </Table.Header>
 
