@@ -11,7 +11,8 @@ function BookingTable() {
 
   if (isLoading) return <Spinner />;
 
-  if (!bookings.length) return <Empty resourceName="bookings" />;
+  // ✅ Přidán otazník - pokud bookings neexistuje, kód nespadne
+  if (!bookings?.length) return <Empty resourceName="bookings" />;
 
   return (
     <Menus>

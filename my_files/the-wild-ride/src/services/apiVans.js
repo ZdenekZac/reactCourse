@@ -16,10 +16,10 @@ export async function createEditVan({ newVan, id }) {
   const imagePath = hasImagePath
     ? newVan.image
     : `${supabaseUrl}/storage/v1/object/public/vans-images/${imageName}`;
+  console.log('QUERY:', imagePath);
 
   //1. Create/Edit van
   let query = supabase.from('vans');
-
   //A - create
   if (!id) {
     query = query.insert([{ ...newVan, image: imagePath }]);

@@ -10,6 +10,8 @@ function VanTable() {
   const { isLoading, vans } = useVans();
   const [searchParams] = useSearchParams();
 
+  console.log(Table);
+
   if (isLoading) return <Spinner />;
 
   const filterValue = searchParams.get('discount') || 'all';
