@@ -11,6 +11,5 @@ export function useSettings() {
     queryKey: ['settings'],
     queryFn: getSettings,
   });
-
   return { isLoading, error, settings };
 }
