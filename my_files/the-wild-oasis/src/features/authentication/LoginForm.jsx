@@ -5,10 +5,11 @@ import Input from '../../ui/Input';
 import FormRowVertical from '../../ui/FormRowVertical';
 import { useLogin } from './useLogin';
 import SpinnerMini from '../../ui/SpinnerMini';
-
+// jojo@jo.jo-fakefake
+//https://temp-mail.org/en/
 function LoginForm() {
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('mayapura');
+  const [password, setPassword] = useState('');
   const { login, isLoading } = useLogin();
 
   function handleSubmit(e) {
