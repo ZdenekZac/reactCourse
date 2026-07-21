@@ -1,4 +1,3 @@
-import styled from 'styled-components';
 import VanRow from './VanRow';
 import Spinner from '../../ui/Spinner';
 import { useVans } from './useVans';
@@ -9,8 +8,6 @@ import Table from '../../ui/Table';
 function VanTable() {
   const { isLoading, vans } = useVans();
   const [searchParams] = useSearchParams();
-
-  console.log(Table);
 
   if (isLoading) return <Spinner />;
 
@@ -27,21 +24,18 @@ function VanTable() {
 
   return (
     <Menus>
-      <Table columns=" 0.6fr 0.6fr 0.6fr 0.6fr 0.6fr 0.6fr 1fr 1fr">
+      <Table columns=' 0.4fr 0.4fr 0.4fr 0.5fr 0.5fr 0.4fr 2fr 0.3fr'>
         <Table.Header>
           <div>img</div>
           <div>Van</div>
-          <div>Plate</div>
           <div>Capacity</div>
+          <div>Plate</div>
           <div>Price</div>
           <div>Discount</div>
           <div>Features</div>
           <div></div>
         </Table.Header>
-        <Table.Body
-          data={filteredVans}
-          render={(van) => <VanRow van={van} key={van.id} />}
-        />
+        <Table.Body data={filteredVans} render={(van) => <VanRow van={van} key={van.id} />} />
       </Table>
     </Menus>
   );

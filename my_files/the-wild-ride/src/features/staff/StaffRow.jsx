@@ -1,9 +1,14 @@
 import styled from 'styled-components';
+
+import CreateStaffForm from './CreateStaffForm';
 import { useState } from 'react';
 import { useDeleteStaff } from './useDeleteStaff';
 import { useCreateStaff } from './useCreateStaff';
-import CreateStaffForm from './CreateStaffForm';
 import { HiPencil, HiSquare2Stack, HiTrash } from 'react-icons/hi2';
+import Modal from '../../ui/Modal';
+import ConfirmDelete from '../../ui/ConfirmDelete';
+import Table from '../../ui/Table';
+import Menus from '../../ui/Menus';
 
 const TableRow = styled.div`
   display: grid;
@@ -34,6 +39,7 @@ function StaffRow({ staff }) {
   const [showForm, setShowForm] = useState(false);
   const { isDeleting, deleteStaff } = useDeleteStaff();
   const { isCreating, createStaff } = useCreateStaff();
+  console.log(staff);
 
   const { id: staffId, fullName, email, phone } = staff;
 

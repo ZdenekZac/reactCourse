@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { useState } from 'react';
 
 import CreateVanForm from './CreateVanForm';
 import { useDeleteVan } from './useDeleteVan';
@@ -20,30 +19,6 @@ const Img = styled.img`
   transition: transform 0.3s ease;
 `;
 
-const TableRow = styled.div`
-  display: grid;
-  grid-template-columns: 0.6fr 0.6fr 0.6fr 0.6fr 0.6fr 0.6fr 1fr 1fr;
-  column-gap: 2.4rem;
-  height: 6rem;
-  align-items: center;
-  padding: 1rem;
-  color: var(--color-grey-600);
-  background-color: var(--color-emerald-200);
-  border-bottom: 0.5px solid var(--color-grey-100);
-
-  &:hover {
-    background-color: var(--color-emerald-400);
-
-    /* ${Img} {
-      transform: scale(1.9) translateX(0.7rem) translateY(-0.4rem);
-    } */
-  }
-`;
-
-const Van = styled.div`
-  font-size: 1.6rem;
-  font-family: 'Sono';
-`;
 const Features = styled.div`
   overflow-y: auto;
   max-height: 100%;
@@ -75,18 +50,9 @@ const Discount = styled.div``;
 
 function VanRow({ van }) {
   const { isDeleting, deleteVan } = useDeleteVan();
-  const { isCreating, createVan } = useCreateVans();
+  const { createVan } = useCreateVans();
   console.log(van);
-  const {
-    id: vanId,
-    registrationPlate: plate,
-    name,
-    maxCapacity,
-    regularPrice,
-    discount,
-    image,
-    features,
-  } = van;
+  const { id: vanId, registrationPlate: plate, name, maxCapacity, regularPrice, discount, image, features } = van;
 
   function handleDuplicate() {
     createVan({
@@ -102,9 +68,9 @@ function VanRow({ van }) {
   return (
     <Table.Row>
       <Img src={image} />
-      <Van>{name}</Van>
-      <Van>{plate}</Van>
+      <div>{name}</div>
       <div>{maxCapacity}</div>
+      <div>{plate}</div>
       <Price>{regularPrice} / day</Price>
       <Discount>{discount}</Discount>
       <Features>{features}</Features>
@@ -118,25 +84,21 @@ function VanRow({ van }) {
                 Duplicate
               </Menus.Button>
 
-              <Modal.Open opens="edit">
+              <Modal.Open opens='edit'>
                 <Menus.Button icon={<HiPencil />}>Edit</Menus.Button>
               </Modal.Open>
 
-              <Modal.Open opens="delete">
+              <Modal.Open opens='delete'>
                 <Menus.Button icon={<HiTrash />}>Delete</Menus.Button>
               </Modal.Open>
             </Menus.List>
 
-            <Modal.Window name="edit">
-              <CreateVanForm vansToEdit={van} />
+            <Modal.Window name='edit'>
+              <CreateVanForm vanToEdit={van} />
             </Modal.Window>
 
-            <Modal.Window name="delete">
-              <ConfirmDelete
-                resourceName="vans"
-                disabled={isDeleting}
-                onConfirm={() => deleteVan(vanId)}
-              />
+            <Modal.Window name='delete'>
+              <ConfirmDelete resourceName='vans' disabled={isDeleting} onConfirm={() => deleteVan(vanId)} />
             </Modal.Window>
           </Menus.Menu>
         </Modal>

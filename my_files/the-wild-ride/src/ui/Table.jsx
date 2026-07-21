@@ -35,6 +35,10 @@ const StyledRow = styled(CommonRow)`
   &:not(:last-child) {
     border-bottom: 1px solid var(--color-grey-100);
   }
+
+  &:nth-child(even) {
+    background-color: var(--color-grey-100); // Nebo např. var(--color-emerald-100)
+  }
 `;
 
 const StyledBody = styled.section`
@@ -65,7 +69,7 @@ const TableContext = createContext();
 function Table({ columns, children }) {
   return (
     <TableContext.Provider value={{ columns }}>
-      <StyledTable role="table">{children}</StyledTable>
+      <StyledTable role='table'>{children}</StyledTable>
     </TableContext.Provider>
   );
 }
@@ -74,7 +78,7 @@ function Header({ children }) {
   const { columns } = useContext(TableContext);
 
   return (
-    <StyledHeader role="row" $columns={columns} as="header">
+    <StyledHeader role='row' $columns={columns} as='header'>
       {children}
     </StyledHeader>
   );
@@ -84,7 +88,7 @@ function Row({ children }) {
   const { columns } = useContext(TableContext);
 
   return (
-    <StyledRow role="row" $columns={columns}>
+    <StyledRow role='row' $columns={columns}>
       {children}
     </StyledRow>
   );
