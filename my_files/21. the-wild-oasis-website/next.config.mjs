@@ -10,6 +10,12 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'countriesnow.space',
       },
+      {
+        protocol: 'https',
+        hostname: 'bfjknuzmhmvbuknknfxr.supabase.co',
+        port: '',
+        pathname: '/storage/v1/object/public/cabin-images/**',
+      },
     ],
   },
 };
