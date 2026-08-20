@@ -1,5 +1,6 @@
 import { eachDayOfInterval } from 'date-fns';
 import { supabase } from './supabase';
+import { notFound } from 'next/navigation';
 
 /////////////
 // GET
@@ -12,10 +13,11 @@ export async function getCabin(id) {
     .single();
 
   // For testing
-  await new Promise((res) => setTimeout(res, 5000));
+  //await new Promise((res) => setTimeout(res, 5000));
 
   if (error) {
     console.error(error);
+    notFound();
   }
 
   return data;
@@ -147,7 +149,7 @@ export async function getCountries() {
     console.log(countries.data);
     return countries.data;
   } catch {
-    throw new Error('Could not fetch countries');
+    throw new Error('Could not fetch countries :(( ');
   }
 }
 
