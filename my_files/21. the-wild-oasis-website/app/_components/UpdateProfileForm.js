@@ -4,9 +4,6 @@ import { useState } from 'react';
 function UpdateProfileForm({ children }) {
   const [count, setCount] = useState();
 
-  //CHANGE
-  const countryFlag = 'pt.jpg';
-  const nationality = 'portugal';
   return (
     <div>
       <form className="bg-primary-900 py-8 px-12 text-lg flex gap-6 flex-col">
