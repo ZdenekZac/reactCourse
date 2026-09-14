@@ -20,15 +20,25 @@ const authConfig = {
           await createGuest({ email: user.email, fullName: user.name });
         return true;
       } catch (err) {
-        console.error('Chyba při přihlášení v signIn callbacku:', err); // <-- TENTO ŘÁDEK ZOBRAZÍ SKUTEČNÝ PROBLÉM
+        console.error('Chyba při přihlášení v signIn callbacku:', err);
 
         return false;
       }
     },
     async session({ session, user }) {
-      const guest = await getGuest(session.user.email);
-      session.user.guestId = guest.id;
-      return session;
+      // const guest = await getGuest(session.user.email);
+      // session.user.guestId = guest.id;
+      // return session;
+      try {
+        const guest = await getGuest(session.user.email);
+        if (guest) {
+          session.user.guestId = guest.id;
+        }
+        return session;
+      } catch (err) {
+        console.error('Chyba v session callbacku:', err);
+        return session; // Vrátíme session i v případě chyby, aby přihlášení nespadlo
+      }
     },
   },
   pages: {
