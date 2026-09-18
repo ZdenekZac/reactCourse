@@ -29,13 +29,16 @@ export async function updateGuest(formData) {
 }
 
 export async function deleteReservation(bookingId) {
+  await new Promise((res) => setTimeout(res, 3000));
+  throw new Error();
+
   const session = await auth();
   if (!session) throw new Error('You must be logged in!');
 
   const guestBookings = await getBookings(session.user.guestId);
   const guestBookingsIds = guestBookings.map((booking) => booking.id);
 
-  if (guestBookingsIds.includes(bookingId)) {
+  if (!guestBookingsIds.includes(bookingId)) {
     throw new Error('you are not allowed to delete this booking');
   }
 
@@ -85,6 +88,7 @@ export async function updateBooking(formData) {
 
   // 6) REVALIDATION
   revalidatePath(`account/reservations/edit/${bookingId}`);
+  revalidatePath('account/reservations');
 
   // 7) REDIRECTING
   redirect('/account/reservations');
