@@ -30,15 +30,15 @@ class Counter extends React.Component {
     date.setDate(date.getDate() + this.state.count);
 
     return (
-      <div className='container'>
-        <button className='counterButton' onClick={this.handleIncrement}>
+      <div className="container">
+        <button className="counterButton" onClick={this.handleIncrement}>
           +
         </button>
 
         <span>
           {date.toDateString()} [{this.state.count}]
         </span>
-        <button className='counterButton' onClick={this.handleDecrement}>
+        <button className="counterButton" onClick={this.handleDecrement}>
           -
         </button>
       </div>
