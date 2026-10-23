@@ -1,3 +1,5 @@
+import { supabase } from '@/lib/supabase';
+
 export default async function handler(req, res) {
   if (req.method !== 'POST')
     return res.status(405).json({
@@ -5,23 +7,18 @@ export default async function handler(req, res) {
       message: 'please make a POST request',
     });
 
-  const contactData = {
-    fullName: 'jonas',
-    email: 'test',
-    subjecct: 'booking',
-    message: 'hey',
-  };
+  const contactData = JSON.parse(req.body);
 
   const { error } = await supabase.from('contact').insert([contactData]);
   if (error)
     res.status(500).json({
-      succes: false,
+      success: false,
       message: 'something went wrong...',
     });
 
   // Success message
   res.status(200).json({
-    succes: true,
-    message: 'thanks for the message...',
+    success: true,
+    message: 'thanks for the message...we will be in touch soon :) ',
   });
 }
